@@ -16,6 +16,7 @@ window.SESSION_DATA = {
     body: 'El sensor de suspensión del coche nuevo es literalmente un potenciómetro OEM (GM 15098628/29), uno por rueda. La señal pasa por un divisor de voltaje porque el sensor da 5V pero el ESP32 solo acepta 3.3V en sus entradas — exactamente el mismo circuito que se practica hoy, solo que a otra escala de voltaje. Umbral real de alerta: ángulo de suspensión > 25°.'
   },
   reference: {
+    diagram: { src: '../assets/img/diagrams/voltage-divider.svg', alt: 'Diagrama de divisor de voltaje', caption: 'Divisor de voltaje: el mismo circuito que baja 5V a 3.3V en el ESP32 real.' },
     formulas: [
       { label: 'Cómo el Arduino convierte voltaje a número (ADC de 10 bits, 0-5V → 0-1023)', code: 'valor_leido = (V_medido / 5V) × 1023\n// Ejemplo: 2.5V → ~511' },
       { label: 'Divisor de voltaje (ejemplo real: 5V → 3.3V con R1=10kΩ, R2=6.8kΩ)', code: 'V_out = V_in × (R2 / (R1 + R2))\nV_out = 5V × (6.8k / (10k + 6.8k)) ≈ 2.02V' }

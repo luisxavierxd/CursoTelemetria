@@ -76,6 +76,12 @@
   function renderReference(data) {
     var ref = data.reference || {};
     var blocks = [];
+    if (ref.diagram) {
+      blocks.push(el('figure', { class: 'diagram' }, [
+        el('img', { src: ref.diagram.src, alt: ref.diagram.alt, loading: 'lazy' }),
+        el('figcaption', { class: 'table-caption' }, [ref.diagram.caption])
+      ]));
+    }
     if (ref.intro) blocks.push(el('p', {}, [ref.intro]));
     (ref.formulas || []).forEach(function (f) {
       blocks.push(el('div', { class: 'formula-item' }, [

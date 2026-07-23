@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 160" width="100%" role="img" aria-labelledby="spi-title">
+  <title id="spi-title">Diagrama de pines SPI entre Arduino Uno y módulo microSD: MOSI 11, MISO 12, SCK 13, CS 10</title>
+  <rect width="360" height="160" fill="#131B2E"/>
+  <rect x="20" y="50" width="90" height="60" rx="6" fill="none" stroke="#E8ECF6" stroke-width="2"/>
+  <text x="65" y="84" text-anchor="middle" fill="#E8ECF6" font-family="monospace" font-size="12">Arduino Uno</text>
+  <rect x="250" y="50" width="90" height="60" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
+  <text x="295" y="84" text-anchor="middle" fill="#FFB13D" font-family="monospace" font-size="12">microSD</text>
+  <line x1="110" y1="60" x2="250" y2="60" stroke="#2547E0" stroke-width="2"/>
+  <text x="180" y="55" text-anchor="middle" fill="#2547E0" font-family="monospace" font-size="10">MOSI (11)</text>
+  <line x1="110" y1="75" x2="250" y2="75" stroke="#6C8CFF" stroke-width="2"/>
+  <text x="180" y="71" text-anchor="middle" fill="#6C8CFF" font-family="monospace" font-size="10">MISO (12)</text>
+  <line x1="110" y1="90" x2="250" y2="90" stroke="#2547E0" stroke-width="2"/>
+  <text x="180" y="105" text-anchor="middle" fill="#2547E0" font-family="monospace" font-size="10">SCK (13)</text>
+  <line x1="110" y1="100" x2="250" y2="100" stroke="#FFB13D" stroke-width="2"/>
+  <text x="180" y="118" text-anchor="middle" fill="#FFB13D" font-family="monospace" font-size="10">CS (10)</text>
+</svg>

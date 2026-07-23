@@ -16,6 +16,7 @@ window.SESSION_DATA = {
     body: 'MadRams usa dos MPU6050 en el mismo bus I2C: uno en el chasis (dirección 0x68) y otro en el volante (0x69). Es el ejemplo perfecto de por qué existen las direcciones I2C — sin ellas, el Arduino no podría distinguir de cuál sensor viene cada dato. Uso real: detección de impacto / rollover (seguridad del piloto).'
   },
   reference: {
+    diagram: { src: '../assets/img/diagrams/i2c-bus.svg', alt: 'Diagrama de bus I2C', caption: 'Dos MPU6050 compartiendo SDA/SCL, distinguidos por dirección (0x68 / 0x69).' },
     intro: 'SDA (Serial Data) es por donde viajan los datos; SCL (Serial Clock) es el "reloj" que sincroniza cuándo se lee cada bit. En Arduino Uno son fijos: SDA = A4, SCL = A5. Una dirección I2C es un número de 7 bits (0-127); dos dispositivos no pueden compartir la misma dirección en el mismo bus — por eso MadRams usa 0x68 y 0x69 (el pin AD0 cambia la dirección entre esos valores). Si se necesitan más de 2 sensores idénticos (como los 2 AS5600 del coche real), se usa un multiplexor I2C (TCA9548A) — tema para fases posteriores, no necesario en este curso. La librería de Adafruit regresa la aceleración en m/s²: en reposo, el eje que apunta hacia abajo debe marcar ≈9.8 m/s², buena forma de verificar que el sensor lee bien. El valor de UMBRAL en el código de impacto es arbitrario — se recomienda probar varios valores en vivo y ajustar.'
   },
   errors: [

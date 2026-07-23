@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="100%" role="img" aria-labelledby="vd-title">
+  <title id="vd-title">Diagrama de divisor de voltaje: Vin a través de R1 y R2 hacia GND, Vout entre ambas</title>
+  <rect width="320" height="200" fill="#131B2E"/>
+  <line x1="60" y1="20" x2="60" y2="60" stroke="#8A93AC" stroke-width="2"/>
+  <text x="60" y="14" text-anchor="middle" fill="#E8ECF6" font-family="monospace" font-size="12">Vin (5V)</text>
+  <rect x="40" y="60" width="40" height="40" fill="none" stroke="#2547E0" stroke-width="2"/>
+  <text x="90" y="85" fill="#8A93AC" font-family="monospace" font-size="11">R1</text>
+  <line x1="60" y1="100" x2="60" y2="120" stroke="#6C8CFF" stroke-width="2"/>
+  <circle cx="60" cy="120" r="4" fill="#6C8CFF"/>
+  <line x1="60" y1="120" x2="180" y2="120" stroke="#6C8CFF" stroke-width="2"/>
+  <text x="200" y="124" fill="#6C8CFF" font-family="monospace" font-size="12">Vout → pin analógico</text>
+  <line x1="60" y1="120" x2="60" y2="140" stroke="#8A93AC" stroke-width="2"/>
+  <rect x="40" y="140" width="40" height="40" fill="none" stroke="#2547E0" stroke-width="2"/>
+  <text x="90" y="165" fill="#8A93AC" font-family="monospace" font-size="11">R2</text>
+  <line x1="60" y1="180" x2="60" y2="195" stroke="#8A93AC" stroke-width="2"/>
+  <text x="60" y="198" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="12">GND</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180" width="100%" role="img" aria-labelledby="i2c-title">
+  <title id="i2c-title">Diagrama de bus I2C: Arduino conectado a dos MPU6050 con direcciones 0x68 y 0x69 compartiendo SDA y SCL</title>
+  <rect width="400" height="180" fill="#131B2E"/>
+  <rect x="20" y="70" width="80" height="40" rx="6" fill="none" stroke="#E8ECF6" stroke-width="2"/>
+  <text x="60" y="94" text-anchor="middle" fill="#E8ECF6" font-family="monospace" font-size="12">Arduino</text>
+  <line x1="100" y1="80" x2="320" y2="80" stroke="#2547E0" stroke-width="2"/>
+  <text x="210" y="72" text-anchor="middle" fill="#2547E0" font-family="monospace" font-size="11">SDA (A4)</text>
+  <line x1="100" y1="100" x2="320" y2="100" stroke="#6C8CFF" stroke-width="2"/>
+  <text x="210" y="116" text-anchor="middle" fill="#6C8CFF" font-family="monospace" font-size="11">SCL (A5)</text>
+  <rect x="240" y="20" width="90" height="40" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
+  <text x="285" y="44" text-anchor="middle" fill="#FFB13D" font-family="monospace" font-size="11">MPU6050 0x68</text>
+  <line x1="285" y1="60" x2="285" y2="80" stroke="#2547E0" stroke-width="2"/>
+  <rect x="240" y="120" width="90" height="40" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
+  <text x="285" y="144" text-anchor="middle" fill="#FFB13D" font-family="monospace" font-size="11">MPU6050 0x69</text>
+  <line x1="285" y1="100" x2="285" y2="120" stroke="#6C8CFF" stroke-width="2"/>
+</svg>
