@@ -151,3 +151,48 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   color: var(--text-dim);
   font-size: 0.9rem;
 }
+
+/* ===== Fondo: Capa A — profundidad ambiental ===== */
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(37, 71, 224, 0.18), transparent 60%),
+    radial-gradient(100% 60% at 50% 110%, rgba(10, 14, 26, 0.9), transparent 70%),
+    var(--bg);
+}
+.bg-ambient::before,
+.bg-ambient::after {
+  content: "";
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.06;
+  will-change: transform;
+}
+.bg-ambient::before {
+  background: var(--blue-royal);
+  top: -20vmax; left: -10vmax;
+  animation: aurora-a 34s ease-in-out infinite alternate;
+}
+.bg-ambient::after {
+  background: var(--blue-bright);
+  bottom: -25vmax; right: -15vmax;
+  animation: aurora-b 42s ease-in-out infinite alternate;
+}
+@keyframes aurora-a {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(12vmax, 8vmax) scale(1.15); }
+}
+@keyframes aurora-b {
+  from { transform: translate(0, 0) scale(1.1); }
+  to   { transform: translate(-10vmax, -6vmax) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-ambient::before, .bg-ambient::after { animation: none; }
+}
