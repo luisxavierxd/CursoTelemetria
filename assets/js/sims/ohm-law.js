@@ -22,6 +22,8 @@
     var vRange = h('input', { type: 'range', min: '3', max: '12', step: '0.5', value: '5' });
 
     var readI = h('span', { class: 'v' }, ['0']);
+    var readR = h('span', { class: 'v' }, ['220 Ω']);
+    var readV = h('span', { class: 'v' }, ['5 V']);
     var readState = h('span', { class: 'sim__pill sim__pill--ok' }, ['LED OK']);
     var ledDot = h('div', {}, []);
     ledDot.style.cssText = 'width:60px;height:60px;border-radius:50%;background:#333;transition:background .15s, box-shadow .15s;';
@@ -29,6 +31,8 @@
     function update() {
       V = parseFloat(vRange.value);
       R = parseFloat(rRange.value);
+      readR.textContent = R + ' Ω';
+      readV.textContent = V + ' V';
       var I = V > Vled ? (V - Vled) / R : 0;
       readI.textContent = (I * 1000).toFixed(1) + ' mA';
       var brightness = Math.min(1, I / Imax);
@@ -54,8 +58,8 @@
     vRange.addEventListener('input', update);
 
     var controls = h('div', { class: 'sim__controls' }, [
-      h('div', { class: 'sim__control' }, [h('label', {}, ['Resistencia (Ω)']), rRange]),
-      h('div', { class: 'sim__control' }, [h('label', {}, ['Voltaje de fuente (V)']), vRange]),
+      h('div', { class: 'sim__control' }, [h('label', {}, ['Resistencia: ', readR]), rRange]),
+      h('div', { class: 'sim__control' }, [h('label', {}, ['Voltaje de fuente: ', readV]), vRange]),
       h('div', { class: 'sim__readout' }, [
         h('div', {}, [h('span', { class: 'k' }, ['Corriente por el LED: ']), readI]),
         h('div', {}, [h('span', { class: 'k' }, ['V = I × R  ·  límite seguro ≈ 20 mA'])])

@@ -21,8 +21,9 @@
     var baseLat = 19.4326, baseLon = -99.1332;
     var t = 0;
 
-    var nmea = h('code', { class: 'formula', style: 'font-size:0.8rem;' }, ['$GPGGA,...']);
-    var packet = h('code', { class: 'formula', style: 'font-size:0.8rem;' }, ['--']);
+    var codeStyle = 'font-size:0.8rem;white-space:normal;overflow-wrap:anywhere;word-break:break-word;';
+    var nmea = h('code', { class: 'formula', style: codeStyle }, ['$GPGGA,...']);
+    var packet = h('code', { class: 'formula', style: codeStyle }, ['--']);
     var rateNote = h('div', { class: 'sim__readout' }, [
       h('div', {}, [h('span', { class: 'k' }, ['Ruta @5Hz · Estado @1Hz — protocolo binario'])])
     ]);
@@ -44,13 +45,8 @@
 
     function fmt(n, dec) { return n.toFixed(dec); }
 
-    var raf;
-    function frame() {
-      t += 0.02;
-      var len = track.getTotalLength();
-      var p = track.getPointAtLength((t % 1) * len);
-      dot.setAttribute('cx', p.x);
-      dot.setAttribute('cy', p.y);
+    var raf, frameCount = 0;
+    function updateReadouts(p) {
       var lat = baseLat + (p.y - 60) * 0.0002;
       var lon = baseLon + (p.x - 100) * 0.0002;
       var speed = (20 + 10 * Math.sin(t * 3)).toFixed(0);
@@ -62,6 +58,17 @@
       [24, 16, 8, 0].forEach(function (s) { bytes.push(toByteHex(lonI >> s)); });
       bytes.push(toByteHex(parseInt(speed, 10)));
       packet.textContent = bytes.join(' ');
+    }
+    function frame() {
+      t += 0.003; // ~5.5 s por vuelta (antes ~0.8 s, demasiado rápido)
+      var len = track.getTotalLength();
+      var p = track.getPointAtLength((t % 1) * len);
+      dot.setAttribute('cx', p.x);
+      dot.setAttribute('cy', p.y);
+      // El punto se mueve suave cada frame; las lecturas se refrescan a ~5 Hz
+      // (cada ~12 frames) para no parpadear y reflejar la tasa "ruta @5Hz".
+      if (frameCount % 12 === 0) updateReadouts(p);
+      frameCount++;
       if (!reduced) raf = requestAnimationFrame(frame);
     }
 
