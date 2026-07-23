@@ -96,7 +96,8 @@
     var wrap = document.createElement('div');
     wrap.className = 'bg-monaco';
     wrap.setAttribute('aria-hidden', 'true');
-    wrap.innerHTML = '<svg viewBox="0 0 411.72 343.70" preserveAspectRatio="xMidYMid meet">' +
+    // viewBox con margen (-24) para que el punto y su glow no se recorten en las orillas.
+    wrap.innerHTML = '<svg viewBox="-24 -24 459.72 391.70" preserveAspectRatio="xMidYMid meet" overflow="visible">' +
       '<path class="monaco-track" fill="none" stroke="#2547E0" stroke-width="3" stroke-linejoin="round" d="' + MONACO_PATH + '"/>' +
       '<circle class="monaco-dot" r="5" fill="#FFB13D"/></svg>';
     document.body.appendChild(wrap);

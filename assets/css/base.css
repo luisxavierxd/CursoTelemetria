@@ -1,5 +1,9 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+
+/* Transición suave (cross-fade) entre páginas: el circuito de fondo no "parpadea"
+   al navegar. Navegadores sin soporte lo ignoran. */
+@view-transition { navigation: auto; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -208,6 +212,6 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   justify-content: center;
   overflow: hidden;
 }
-.bg-monaco svg { width: min(92vw, 900px); height: auto; max-height: 86vh; }
-.bg-monaco .monaco-track { stroke-opacity: 0.22; stroke-dasharray: 1600; }
-.bg-monaco .monaco-dot { opacity: 0.65; filter: drop-shadow(0 0 6px rgba(255, 177, 61, 0.9)); }
+.bg-monaco svg { width: min(92vw, 900px); height: auto; max-height: 86vh; overflow: visible; }
+.bg-monaco .monaco-track { stroke-opacity: 0.32; stroke-dasharray: 1600; }
+.bg-monaco .monaco-dot { opacity: 0.9; filter: drop-shadow(0 0 7px rgba(255, 177, 61, 0.95)); }
