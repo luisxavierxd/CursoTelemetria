@@ -3,6 +3,8 @@
 .session-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: var(--space-1); }
 .session-hero .quote { color: var(--text-dim); font-style: italic; max-width: 640px; }
 .session-hero .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--space-2); }
+.session-hero__trace-wrap { margin-top: var(--space-2); opacity: 0.6; }
+.session-hero__trace-wrap svg { display: block; width: 100%; max-width: 280px; height: auto; }
 
 .session-section { padding: var(--space-5) 0; }
 .session-section h2 { font-size: 1.6rem; margin-bottom: var(--space-3); }

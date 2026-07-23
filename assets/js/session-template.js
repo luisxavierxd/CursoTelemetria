@@ -31,11 +31,16 @@
   }
 
   function renderHero(data) {
+    var traceSvg = '<svg class="circuit-trace session-hero__trace" viewBox="0 0 300 40" ' +
+      'preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+      '<path d="M0 30 L60 30 L60 15 L140 15 L140 30 L220 30 L220 10 L300 10" ' +
+      'fill="none" stroke="#2547E0" stroke-width="2" stroke-dasharray="900" /></svg>';
     var children = [
       el('span', { class: 'num' }, [data.icon + ' ' + data.number]),
       el('h1', {}, [data.title]),
       el('p', { class: 'quote' }, [data.quote]),
-      el('div', { class: 'badges' }, data.badges.map(function (b) { return el('span', { class: 'badge' }, [b]); }))
+      el('div', { class: 'badges' }, data.badges.map(function (b) { return el('span', { class: 'badge' }, [b]); })),
+      el('div', { class: 'session-hero__trace-wrap', html: traceSvg })
     ];
     if (data.photoPlaceholder) {
       children.push(el('div', { class: 'photo-placeholder reveal', style: 'margin-top:1.5rem;max-width:420px;' }, [data.photoPlaceholder]));
@@ -171,7 +176,7 @@
     root.appendChild(renderNav(data));
     root.appendChild(renderFooter());
     document.title = data.title + ' · Curso Telemetría · MadRams';
-    if (window.TelemetryAnim) window.TelemetryAnim.revealNew(root);
+    if (window.TelemetryAnim) window.TelemetryAnim.init();
   }
 
   window.TelemetryTemplate = { render: render };
