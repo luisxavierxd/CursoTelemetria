@@ -6,6 +6,8 @@ window.SESSION_DATA = {
   quote: 'Bus OneWire + calibración segura de un sensor real, sin riesgos de quemadura.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'DS18B20 en motor/CVT · dos sensores, un bus', 'Bonus: MPR121 capacitivo'],
   photoPlaceholder: 'Foto: DS18B20 montado en motor/CVT del coche real',
+  simulator: { type: 'onewire-temp', title: 'Laboratorio: bus OneWire y umbrales', caption: 'Dos DS18B20 en un solo cable. Sube la temperatura y quita el pull-up para ver el error real.' },
+  model: { label: 'DS18B20', alt: 'Modelo 3D del sensor DS18B20', src: '' },
   content: [
     'Bus OneWire: cómo múltiples sensores comparten un solo pin de datos',
     'Por qué monitorear temperatura de motor y CVT (riesgo de daño térmico)',
