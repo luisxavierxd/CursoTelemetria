@@ -366,33 +366,53 @@
     rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LAT']), latEl]));
     rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LON']), lonEl]));
 
-    // Sparkline en vivo (historial de RPM) que llena la altura sobrante del riel.
+    // Mini-gráfica en vivo del historial de RPM, con ejes y valores.
+    var rpmM = metrics[0];
+    function fmtK(v) { return (v / 1000).toFixed(1) + 'k'; }
     var svgNS = 'http://www.w3.org/2000/svg';
-    var spark = document.createElementNS(svgNS, 'svg');
-    spark.setAttribute('viewBox', '0 0 100 40');
-    spark.setAttribute('preserveAspectRatio', 'none');
-    var sparkLine = document.createElementNS(svgNS, 'polyline');
-    sparkLine.setAttribute('fill', 'none');
-    sparkLine.setAttribute('stroke', '#6C8CFF');
-    sparkLine.setAttribute('stroke-width', '1.5');
-    sparkLine.setAttribute('vector-effect', 'non-scaling-stroke');
+    function svgEl(tag, attrs) {
+      var n = document.createElementNS(svgNS, tag);
+      Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+      return n;
+    }
+    var spark = svgEl('svg', { viewBox: '0 0 100 40', preserveAspectRatio: 'none' });
+    spark.appendChild(svgEl('line', { x1: 0, y1: 13.3, x2: 100, y2: 13.3, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
+    spark.appendChild(svgEl('line', { x1: 0, y1: 26.6, x2: 100, y2: 26.6, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
+    var sparkArea = svgEl('polygon', { fill: 'rgba(37,71,224,0.16)', stroke: 'none' });
+    var sparkLine = svgEl('polyline', { fill: 'none', stroke: '#6C8CFF', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' });
+    spark.appendChild(sparkArea);
     spark.appendChild(sparkLine);
+
     var SPN = 48, hist = [];
     function drawSpark(norm) {
       hist.push(norm);
       if (hist.length > SPN) hist.shift();
-      var pts = hist.map(function (v, i) {
-        return (i / (SPN - 1) * 100).toFixed(1) + ',' + (38 - v * 36).toFixed(1);
-      }).join(' ');
-      sparkLine.setAttribute('points', pts);
+      var lp = hist.map(function (v, i) {
+        return (i / (SPN - 1) * 100).toFixed(1) + ',' + (39 - v * 37).toFixed(1);
+      });
+      sparkLine.setAttribute('points', lp.join(' '));
+      var lastX = ((hist.length - 1) / (SPN - 1) * 100).toFixed(1);
+      sparkArea.setAttribute('points', '0,40 ' + lp.join(' ') + ' ' + lastX + ',40');
     }
+
+    var chart = el('div', { class: 'spark' }, [
+      el('div', { class: 'spark__area' }, [
+        el('div', { class: 'spark__yaxis' }, [
+          el('span', {}, [fmtK(rpmM.max)]),
+          el('span', {}, [fmtK((rpmM.min + rpmM.max) / 2)]),
+          el('span', {}, [fmtK(rpmM.min)])
+        ]),
+        el('div', { class: 'spark__plot' }, [spark])
+      ]),
+      el('div', { class: 'spark__xaxis' }, [el('span', {}, ['−45 s']), el('span', {}, ['ahora'])])
+    ]);
 
     var aside = el('aside', { class: 'side-rail side-rail--right', 'aria-hidden': 'true' }, [
       el('div', { class: 'side-rail__label' }, ['Telemetría · demo']),
       el('div', { class: 'telem' }, rows),
       el('div', { class: 'telem-spark' }, [
         el('div', { class: 'telem-spark__label' }, ['RPM · histórico']),
-        spark
+        chart
       ])
     ]);
 

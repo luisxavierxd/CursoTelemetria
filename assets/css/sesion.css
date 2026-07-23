@@ -102,7 +102,22 @@
 .telem__bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 4px; }
 .telem__bar span { display: block; height: 100%; background: var(--blue-royal); transition: width 0.4s ease, background 0.4s ease; }
 
-/* Sparkline en vivo (llena la altura sobrante del riel derecho) */
-.telem-spark { margin-top: var(--space-3); flex: 1; display: flex; flex-direction: column; min-height: 90px; }
-.telem-spark__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; text-align: left; }
-.telem-spark svg { width: 100%; flex: 1; min-height: 70px; }
+/* Mini-gráfica de RPM en vivo (llena la altura sobrante del riel derecho) */
+.telem-spark { margin-top: var(--space-3); flex: 1; display: flex; flex-direction: column; min-height: 130px; text-align: left; }
+.telem-spark__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.spark { flex: 1; display: flex; flex-direction: column; min-height: 90px; }
+.spark__area { flex: 1; display: flex; gap: 6px; min-height: 70px; }
+.spark__yaxis {
+  display: flex; flex-direction: column; justify-content: space-between;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
+  text-align: right; width: 26px; padding: 1px 0;
+}
+.spark__plot {
+  flex: 1; position: relative;
+  border-left: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.spark__plot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.spark__xaxis {
+  display: flex; justify-content: space-between; margin-left: 32px; margin-top: 4px;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
+}
