@@ -202,13 +202,14 @@
     return el('div', { class: 'reveal', style: 'margin-top:1.5rem;' }, [slot]);
   }
 
-  function renderSimulator(data) {
-    if (!data.simulator || !window.TelemetrySims || !window.TelemetrySims[data.simulator.type]) return null;
-    var sim = data.simulator;
+  // Construye la sección del laboratorio a partir de la spec del simulador.
+  // Se usa tanto suelta (renderSimulator) como embebida en la lección (bloque 'lab').
+  function buildSimSection(sim, heading) {
+    if (!sim || !window.TelemetrySims || !window.TelemetrySims[sim.type]) return null;
     var body = el('div', { class: 'sim__mount' }, []);
     var section = el('section', { class: 'session-section' }, [
       el('div', { class: 'container' }, [
-        el('h2', { class: 'reveal' }, ['Laboratorio interactivo']),
+        el('h2', { class: 'reveal' }, [heading || 'Laboratorio interactivo']),
         el('div', { class: 'sim reveal' }, [
           el('div', { class: 'sim__head' }, [
             el('h3', {}, [sim.title || 'Simulador']),
@@ -222,6 +223,62 @@
     return section;
   }
 
+  function renderSimulator(data) { return buildSimSection(data.simulator); }
+
+  // ---- Lección explicativa (flujo de presentación por bloques) ----
+  function renderConceptBlock(b) {
+    var kids = [];
+    if (b.heading) kids.push(el('h2', { class: 'reveal' }, [b.heading]));
+    var inner = [];
+    (b.body || []).forEach(function (para) { inner.push(el('p', { html: para })); });
+    if (b.code) inner.push(el('pre', { class: 'formula' }, [b.code]));
+    if (b.diagram) {
+      inner.push(el('figure', { class: 'diagram' }, [
+        el('img', { src: b.diagram.src, alt: b.diagram.alt, loading: 'lazy' }),
+        b.diagram.caption ? el('figcaption', { class: 'table-caption' }, [b.diagram.caption]) : null
+      ]));
+    }
+    if (b.teacher) {
+      inner.push(el('details', { class: 'teacher-note' }, [
+        el('summary', {}, ['▸ Para el profesor']),
+        el('p', { html: b.teacher })
+      ]));
+    }
+    kids.push(el('div', { class: 'concept reveal' }, inner));
+    return el('section', { class: 'session-section' }, [el('div', { class: 'container' }, kids)]);
+  }
+
+  function renderCalloutBlock(b) {
+    return el('section', { class: 'session-section' }, [
+      el('div', { class: 'container' }, [
+        el('div', { class: 'callout reveal' }, [
+          b.heading ? el('h2', {}, [b.heading]) : null,
+          el('p', { html: b.body })
+        ])
+      ])
+    ]);
+  }
+
+  function renderDiagramBlock(b) {
+    return el('section', { class: 'session-section' }, [
+      el('div', { class: 'container' }, [
+        el('figure', { class: 'diagram diagram--wide reveal' }, [
+          el('img', { src: b.src, alt: b.alt, loading: 'lazy' }),
+          b.caption ? el('figcaption', { class: 'table-caption' }, [b.caption]) : null
+        ])
+      ])
+    ]);
+  }
+
+  function renderLesson(data) {
+    return data.lesson.map(function (b) {
+      if (b.type === 'lab') return buildSimSection(data.simulator, b.heading);
+      if (b.type === 'callout') return renderCalloutBlock(b);
+      if (b.type === 'diagram') return renderDiagramBlock(b);
+      return renderConceptBlock(b);
+    });
+  }
+
   function render(data) {
     var root = document.getElementById('session-root');
     root.appendChild(renderHeader(data));
@@ -231,11 +288,19 @@
       var heroContainer = root.querySelector('.session-hero .container');
       if (heroContainer) heroContainer.appendChild(modelNode);
     }
-    root.appendChild(renderContent(data));
-    root.appendChild(renderConnection(data));
-    root.appendChild(renderReference(data));
-    var simNode = renderSimulator(data);
-    if (simNode) root.appendChild(simNode);
+    if (data.lesson && data.lesson.length) {
+      // Flujo de presentación: conceptos explicados, diagramas y el laboratorio
+      // embebido en el orden que definan los datos.
+      renderLesson(data).forEach(function (node) { if (node) root.appendChild(node); });
+      root.appendChild(renderReference(data));
+    } else {
+      // Retrocompatibilidad (p. ej. sesión 6): bullets + conexión + lab suelto.
+      root.appendChild(renderContent(data));
+      root.appendChild(renderConnection(data));
+      root.appendChild(renderReference(data));
+      var simNode = renderSimulator(data);
+      if (simNode) root.appendChild(simNode);
+    }
     if (data.errors && data.errors.length) root.appendChild(renderErrors(data));
     var safety = renderSafety(data);
     if (safety) root.appendChild(safety);

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 170" width="100%" role="img" aria-labelledby="ohm-title">
+  <title id="ohm-title">Triángulo de la Ley de Ohm: V arriba, I y R abajo. Tapa la que buscas para ver su fórmula.</title>
+  <rect width="240" height="170" fill="#131B2E"/>
+  <polygon points="120,20 30,150 210,150" fill="none" stroke="#2547E0" stroke-width="2"/>
+  <line x1="63" y1="102" x2="177" y2="102" stroke="#24304A" stroke-width="2"/>
+  <line x1="120" y1="102" x2="120" y2="150" stroke="#24304A" stroke-width="2"/>
+  <text x="120" y="80" text-anchor="middle" fill="#FFB13D" font-family="monospace" font-size="30">V</text>
+  <text x="90" y="138" text-anchor="middle" fill="#6C8CFF" font-family="monospace" font-size="26">I</text>
+  <text x="150" y="138" text-anchor="middle" fill="#6C8CFF" font-family="monospace" font-size="26">R</text>
+  <text x="120" y="166" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="10">V = I × R   ·   I = V / R   ·   R = V / I</text>
+</svg>
