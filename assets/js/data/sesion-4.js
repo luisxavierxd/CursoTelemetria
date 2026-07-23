@@ -6,6 +6,8 @@ window.SESSION_DATA = {
   quote: 'Introducción a I2C usando el sensor real de detección de impacto/rollover.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'MPU6050 ×2 en el mismo bus I2C', 'Chasis 0x68 / volante 0x69'],
   photoPlaceholder: 'Foto: los dos MPU6050 instalados — chasis y volante',
+  simulator: { type: 'i2c-imu', title: 'Laboratorio: direcciones I2C y umbral de impacto', caption: 'Cambia AD0 para ver 0x68/0x69 (y el conflicto si chocan), e inclina el IMU para disparar el evento.' },
+  model: { label: 'MPU6050', alt: 'Modelo 3D del IMU MPU6050', src: '' },
   content: [
     'Qué es un bus I2C: SDA, SCL, direcciones de dispositivo',
     'Por qué varios sensores pueden compartir 2 cables',
