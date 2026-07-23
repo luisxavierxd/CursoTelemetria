@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="100%" role="img" aria-labelledby="vd-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 200" width="100%" role="img" aria-labelledby="vd-title">
   <title id="vd-title">Diagrama de divisor de voltaje: Vin a través de R1 y R2 hacia GND, Vout entre ambas</title>
-  <rect width="320" height="200" fill="#131B2E"/>
+  <rect width="380" height="200" fill="#131B2E"/>
   <line x1="60" y1="20" x2="60" y2="60" stroke="#8A93AC" stroke-width="2"/>
   <text x="60" y="14" text-anchor="middle" fill="#E8ECF6" font-family="monospace" font-size="12">Vin (5V)</text>
   <rect x="40" y="60" width="40" height="40" fill="none" stroke="#2547E0" stroke-width="2"/>
