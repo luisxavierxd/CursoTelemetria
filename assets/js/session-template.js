@@ -15,10 +15,17 @@
   }
 
   function renderHeader(data) {
-    var dots = [1, 2, 3, 4, 5].map(function (n) {
-      var current = data.slug === 'sesion-' + n;
-      return el('a', { href: 'sesion-' + n + '.html', 'aria-current': current ? 'true' : 'false' }, ['Sesión ' + n]);
-    });
+    var currentNum = parseInt(data.number, 10) || 0; // '01'→1 … '06'→6
+    function dot(n, extraClass, label) {
+      var cls = 'nav-dot' + (extraClass ? ' ' + extraClass : '');
+      if (n < currentNum) cls += ' is-done';
+      else if (n === currentNum) cls += ' is-current';
+      var attrs = { href: 'sesion-' + n + '.html', class: cls, 'aria-label': label };
+      if (n === currentNum) attrs['aria-current'] = 'true';
+      return el('a', attrs, [label]);
+    }
+    var dots = [1, 2, 3, 4, 5].map(function (n) { return dot(n, '', 'Sesión ' + n); });
+    dots.push(dot(6, 'nav-dot--bonus', 'Sesión 6+'));
     return el('header', { class: 'site-header' }, [
       el('div', { class: 'container' }, [
         el('a', { class: 'site-header__brand', href: '../index.html' }, [
@@ -300,10 +307,25 @@
       links.push(a);
       return el('li', {}, [a]);
     }));
+    var progressFill = el('span', { class: 'rail-progress__fill' }, []);
+    var progress = el('div', { class: 'rail-progress' }, [
+      el('div', { class: 'rail-progress__label' }, ['Avance']),
+      el('div', { class: 'rail-progress__track' }, [progressFill])
+    ]);
     var nav = el('nav', { class: 'side-rail side-rail--left', 'aria-label': 'Índice de la sesión' }, [
       el('div', { class: 'side-rail__label' }, ['En esta sesión']),
-      ul
+      ul,
+      progress
     ]);
+    // Barra de avance de lectura de la página.
+    function updProgress() {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      var pct = max > 0 ? (window.pageYOffset || h.scrollTop) / max * 100 : 0;
+      progressFill.style.width = Math.max(0, Math.min(100, pct)).toFixed(1) + '%';
+    }
+    window.addEventListener('scroll', updProgress, { passive: true });
+    setTimeout(updProgress, 0);
     // Resaltar el tema visible al hacer scroll.
     setTimeout(function () {
       if (!('IntersectionObserver' in window)) return;
@@ -344,9 +366,34 @@
     rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LAT']), latEl]));
     rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LON']), lonEl]));
 
+    // Sparkline en vivo (historial de RPM) que llena la altura sobrante del riel.
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var spark = document.createElementNS(svgNS, 'svg');
+    spark.setAttribute('viewBox', '0 0 100 40');
+    spark.setAttribute('preserveAspectRatio', 'none');
+    var sparkLine = document.createElementNS(svgNS, 'polyline');
+    sparkLine.setAttribute('fill', 'none');
+    sparkLine.setAttribute('stroke', '#6C8CFF');
+    sparkLine.setAttribute('stroke-width', '1.5');
+    sparkLine.setAttribute('vector-effect', 'non-scaling-stroke');
+    spark.appendChild(sparkLine);
+    var SPN = 48, hist = [];
+    function drawSpark(norm) {
+      hist.push(norm);
+      if (hist.length > SPN) hist.shift();
+      var pts = hist.map(function (v, i) {
+        return (i / (SPN - 1) * 100).toFixed(1) + ',' + (38 - v * 36).toFixed(1);
+      }).join(' ');
+      sparkLine.setAttribute('points', pts);
+    }
+
     var aside = el('aside', { class: 'side-rail side-rail--right', 'aria-hidden': 'true' }, [
       el('div', { class: 'side-rail__label' }, ['Telemetría · demo']),
-      el('div', { class: 'telem' }, rows)
+      el('div', { class: 'telem' }, rows),
+      el('div', { class: 'telem-spark' }, [
+        el('div', { class: 'telem-spark__label' }, ['RPM · histórico']),
+        spark
+      ])
     ]);
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -369,7 +416,11 @@
       lon += (Math.random() - 0.5) * 0.0009;
       latEl.textContent = lat.toFixed(4);
       lonEl.textContent = lon.toFixed(4);
+      var rpm = metrics[0];
+      drawSpark((rpm.val - rpm.min) / (rpm.max - rpm.min));
     }
+    // Semilla del histórico para que el sparkline no arranque vacío.
+    for (var s = 0; s < SPN; s++) drawSpark(0.3 + Math.random() * 0.4);
     step();
     if (!reduced) setInterval(step, 900);
     return aside;

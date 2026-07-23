@@ -65,7 +65,13 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 .nav-dots a:hover { background: var(--blue-bright); }
-.nav-dots a[aria-current="true"] { background: var(--blue-royal); transform: scale(1.3); }
+.nav-dots a.is-done { background: var(--signal-amber); }
+.nav-dots a.is-current { background: var(--blue-royal); transform: scale(1.35); }
+/* Sesión 6+ (bonus): rombo con contorno ámbar para distinguirla del resto */
+.nav-dots a.nav-dot--bonus { border-radius: 2px; background: transparent; border: 1.5px solid var(--signal-amber); transform: rotate(45deg); }
+.nav-dots a.nav-dot--bonus.is-current { background: var(--signal-amber); transform: rotate(45deg) scale(1.35); }
+.nav-dots a.nav-dot--bonus.is-done { background: var(--signal-amber); }
+.nav-dots a.nav-dot--bonus:hover { border-color: var(--blue-bright); }
 
 /* Buttons */
 .btn {

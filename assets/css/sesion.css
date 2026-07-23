@@ -57,42 +57,52 @@
 
 /* ---- Rieles laterales (solo pantallas anchas) ---- */
 .side-rail { display: none; }
-@media (min-width: 1400px) {
+@media (min-width: 1540px) {
   .side-rail {
-    display: block;
-    position: fixed;
-    top: 108px;
-    width: 150px;
+    display: flex; flex-direction: column;
+    position: fixed; top: 120px; bottom: 32px;
     z-index: 5;
-    max-height: calc(100vh - 140px);
-    overflow: auto;
-    scrollbar-width: none;
+    /* Ancho responsivo: llena el margen disponible (con un tope), dejando un
+       espacio con el contenido para no topar con las barras horizontales. */
+    width: clamp(160px, calc((100vw - var(--max-width)) / 2 - 56px), 240px);
+    overflow: hidden;
   }
-  .side-rail::-webkit-scrollbar { display: none; }
-  .side-rail--left { left: calc((100vw - var(--max-width)) / 2 - 168px); }
-  .side-rail--right { right: calc((100vw - var(--max-width)) / 2 - 168px); text-align: right; }
+  /* Pegados al contenido con 40px de separación (respiro con las barras del hero). */
+  .side-rail--left  { right: calc(50% + (var(--max-width) / 2) + 40px); }
+  .side-rail--right { left: calc(50% + (var(--max-width) / 2) + 40px); text-align: right; }
 }
 .side-rail__label {
-  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px;
-  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border); flex-shrink: 0;
 }
 
 /* Índice / scrollspy */
-.spy { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.spy { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
 .spy a {
-  display: block; padding: 5px 10px; border-left: 2px solid var(--border);
-  color: var(--text-dim); text-decoration: none; font-size: 0.82rem; line-height: 1.3;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  display: block; padding: 9px 12px; border-left: 2px solid var(--border);
+  color: var(--text-dim); text-decoration: none; font-size: 0.86rem; line-height: 1.35;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
-.spy a:hover { color: var(--text); }
-.spy a.is-active { color: var(--blue-bright); border-left-color: var(--blue-royal); }
+.spy a:hover { color: var(--text); background: rgba(108, 140, 255, 0.06); }
+.spy a.is-active { color: var(--blue-bright); border-left-color: var(--blue-royal); background: rgba(37, 71, 224, 0.1); }
+
+/* Avance de lectura (pie del riel izquierdo, llena la altura sobrante) */
+.rail-progress { margin-top: auto; flex-shrink: 0; padding-top: var(--space-2); }
+.rail-progress__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+.rail-progress__track { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; }
+.rail-progress__fill { display: block; height: 100%; width: 0; background: var(--blue-royal); transition: width 0.15s linear; }
 
 /* Ticker de telemetría */
-.telem { display: grid; gap: 8px; font-family: var(--font-mono); }
-.telem__row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.78rem; }
+.telem { display: grid; gap: 12px; font-family: var(--font-mono); flex-shrink: 0; }
+.telem__row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.82rem; }
 .telem__k { color: var(--text-dim); }
 .telem__v { color: var(--blue-bright); font-variant-numeric: tabular-nums; }
 .telem__v.is-hot { color: var(--signal-amber); }
-.telem__bar { height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; margin-top: 2px; }
+.telem__bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 4px; }
 .telem__bar span { display: block; height: 100%; background: var(--blue-royal); transition: width 0.4s ease, background 0.4s ease; }
+
+/* Sparkline en vivo (llena la altura sobrante del riel derecho) */
+.telem-spark { margin-top: var(--space-3); flex: 1; display: flex; flex-direction: column; min-height: 90px; }
+.telem-spark__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; text-align: left; }
+.telem-spark svg { width: 100%; flex: 1; min-height: 70px; }
