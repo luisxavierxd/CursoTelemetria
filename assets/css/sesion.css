@@ -60,13 +60,11 @@
 @media (min-width: 1540px) {
   .side-rail {
     display: flex; flex-direction: column;
-    position: fixed; top: 120px;
+    position: fixed; top: 120px; bottom: 32px;
     z-index: 5;
     /* Ancho responsivo: llena el margen disponible (con un tope), dejando un
        espacio con el contenido para no topar con las barras horizontales. */
     width: clamp(160px, calc((100vw - var(--max-width)) / 2 - 56px), 240px);
-    /* Altura según contenido (sin estirar), con tope y scroll oculto por si acaso. */
-    max-height: calc(100vh - 152px);
     overflow: auto; scrollbar-width: none;
   }
   .side-rail::-webkit-scrollbar { display: none; }
@@ -90,8 +88,8 @@
 .spy a:hover { color: var(--text); background: rgba(108, 140, 255, 0.06); }
 .spy a.is-active { color: var(--blue-bright); border-left-color: var(--blue-royal); background: rgba(37, 71, 224, 0.1); }
 
-/* Avance de lectura (pie del riel izquierdo) */
-.rail-progress { margin-top: var(--space-3); flex-shrink: 0; }
+/* Avance de lectura (pie del riel izquierdo, anclado abajo) */
+.rail-progress { margin-top: auto; flex-shrink: 0; }
 .rail-progress__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
 .rail-progress__track { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; }
 .rail-progress__fill { display: block; height: 100%; width: 0; background: var(--blue-royal); transition: width 0.15s linear; }
@@ -105,8 +103,8 @@
 .telem__bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 4px; }
 .telem__bar span { display: block; height: 100%; background: var(--blue-royal); transition: width 0.4s ease, background 0.4s ease; }
 
-/* Mini-gráfica de RPM en vivo (altura fija, proporción de gráfica) */
-.telem-spark { margin-top: var(--space-3); flex: none; display: flex; flex-direction: column; text-align: left; }
+/* Mini-gráfica de RPM en vivo (altura fija, proporción de gráfica; anclada abajo) */
+.telem-spark { margin-top: auto; flex: none; display: flex; flex-direction: column; text-align: left; }
 .telem-spark__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
 .spark { flex: none; display: flex; flex-direction: column; }
 .spark__area { height: 92px; display: flex; gap: 6px; }
