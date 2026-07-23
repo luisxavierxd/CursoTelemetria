@@ -366,54 +366,68 @@
     rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LAT']), latEl]));
     rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LON']), lonEl]));
 
-    // Mini-gráfica en vivo del historial de RPM, con ejes y valores.
-    var rpmM = metrics[0];
-    function fmtK(v) { return (v / 1000).toFixed(1) + 'k'; }
+    // Mini-gráficas en vivo (una por métrica), con ejes, valores y alarma en ámbar.
+    var SPN = 48;
     var svgNS = 'http://www.w3.org/2000/svg';
     function svgEl(tag, attrs) {
       var n = document.createElementNS(svgNS, tag);
       Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
       return n;
     }
-    var spark = svgEl('svg', { viewBox: '0 0 100 40', preserveAspectRatio: 'none' });
-    spark.appendChild(svgEl('line', { x1: 0, y1: 13.3, x2: 100, y2: 13.3, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
-    spark.appendChild(svgEl('line', { x1: 0, y1: 26.6, x2: 100, y2: 26.6, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
-    var sparkArea = svgEl('polygon', { fill: 'rgba(37,71,224,0.16)', stroke: 'none' });
-    var sparkLine = svgEl('polyline', { fill: 'none', stroke: '#6C8CFF', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' });
-    spark.appendChild(sparkArea);
-    spark.appendChild(sparkLine);
+    function metricByKey(k) { for (var i = 0; i < metrics.length; i++) if (metrics[i].k === k) return metrics[i]; }
+    function fmtVal(m, v) { return v.toFixed(m.dec) + (m.suffix || ''); }
 
-    var SPN = 48, hist = [];
-    function drawSpark(norm) {
-      hist.push(norm);
-      if (hist.length > SPN) hist.shift();
-      var lp = hist.map(function (v, i) {
-        return (i / (SPN - 1) * 100).toFixed(1) + ',' + (39 - v * 37).toFixed(1);
-      });
-      sparkLine.setAttribute('points', lp.join(' '));
-      var lastX = ((hist.length - 1) / (SPN - 1) * 100).toFixed(1);
-      sparkArea.setAttribute('points', '0,40 ' + lp.join(' ') + ' ' + lastX + ',40');
+    function buildMiniChart(title, metric) {
+      var svg = svgEl('svg', { viewBox: '0 0 100 40', preserveAspectRatio: 'none' });
+      svg.appendChild(svgEl('line', { x1: 0, y1: 13.3, x2: 100, y2: 13.3, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
+      svg.appendChild(svgEl('line', { x1: 0, y1: 26.6, x2: 100, y2: 26.6, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
+      var area = svgEl('polygon', { fill: 'rgba(37,71,224,0.16)', stroke: 'none' });
+      var line = svgEl('polyline', { fill: 'none', stroke: '#6C8CFF', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke' });
+      svg.appendChild(area); svg.appendChild(line);
+      var hist = [];
+      function redraw() {
+        var lp = hist.map(function (v, i) { return (i / (SPN - 1) * 100).toFixed(1) + ',' + (39 - v * 37).toFixed(1); });
+        line.setAttribute('points', lp.join(' '));
+        var lastX = ((hist.length - 1) / (SPN - 1) * 100).toFixed(1);
+        area.setAttribute('points', '0,40 ' + lp.join(' ') + ' ' + lastX + ',40');
+        var hot = metric.hot && metric.val >= metric.hot; // alarma → gráfica ámbar
+        line.setAttribute('stroke', hot ? '#FFB13D' : '#6C8CFF');
+        area.setAttribute('fill', hot ? 'rgba(255,177,61,0.2)' : 'rgba(37,71,224,0.16)');
+      }
+      function update() {
+        hist.push((metric.val - metric.min) / (metric.max - metric.min));
+        if (hist.length > SPN) hist.shift();
+        redraw();
+      }
+      for (var s = 0; s < SPN; s++) hist.push(0.3 + Math.random() * 0.4);
+      redraw();
+      var elChart = el('div', { class: 'mini-chart' }, [
+        el('div', { class: 'telem-spark__label' }, [title]),
+        el('div', { class: 'spark' }, [
+          el('div', { class: 'spark__area' }, [
+            el('div', { class: 'spark__yaxis' }, [
+              el('span', {}, [fmtVal(metric, metric.max)]),
+              el('span', {}, [fmtVal(metric, (metric.min + metric.max) / 2)]),
+              el('span', {}, [fmtVal(metric, metric.min)])
+            ]),
+            el('div', { class: 'spark__plot' }, [svg])
+          ]),
+          el('div', { class: 'spark__xaxis' }, [el('span', {}, ['−45 s']), el('span', {}, ['ahora'])])
+        ])
+      ]);
+      return { el: elChart, update: update };
     }
 
-    var chart = el('div', { class: 'spark' }, [
-      el('div', { class: 'spark__area' }, [
-        el('div', { class: 'spark__yaxis' }, [
-          el('span', {}, [fmtK(rpmM.max)]),
-          el('span', {}, [fmtK((rpmM.min + rpmM.max) / 2)]),
-          el('span', {}, [fmtK(rpmM.min)])
-        ]),
-        el('div', { class: 'spark__plot' }, [spark])
-      ]),
-      el('div', { class: 'spark__xaxis' }, [el('span', {}, ['−45 s']), el('span', {}, ['ahora'])])
-    ]);
+    var charts = [
+      buildMiniChart('Velocidad · km/h', metricByKey('VEL km/h')),
+      buildMiniChart('Motor · °C', metricByKey('MOTOR °C')),
+      buildMiniChart('Fuerza G', metricByKey('FUERZA G'))
+    ];
 
     var aside = el('aside', { class: 'side-rail side-rail--right', 'aria-hidden': 'true' }, [
       el('div', { class: 'side-rail__label' }, ['Telemetría · demo']),
       el('div', { class: 'telem' }, rows),
-      el('div', { class: 'telem-spark' }, [
-        el('div', { class: 'telem-spark__label' }, ['RPM · histórico']),
-        chart
-      ])
+      el('div', { class: 'telem-charts' }, charts.map(function (c) { return c.el; }))
     ]);
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -436,11 +450,8 @@
       lon += (Math.random() - 0.5) * 0.0009;
       latEl.textContent = lat.toFixed(4);
       lonEl.textContent = lon.toFixed(4);
-      var rpm = metrics[0];
-      drawSpark((rpm.val - rpm.min) / (rpm.max - rpm.min));
+      charts.forEach(function (c) { c.update(); });
     }
-    // Semilla del histórico para que el sparkline no arranque vacío.
-    for (var s = 0; s < SPN; s++) drawSpark(0.3 + Math.random() * 0.4);
     step();
     if (!reduced) setInterval(step, 900);
     return aside;

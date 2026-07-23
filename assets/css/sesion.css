@@ -103,15 +103,16 @@
 .telem__bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 4px; }
 .telem__bar span { display: block; height: 100%; background: var(--blue-royal); transition: width 0.4s ease, background 0.4s ease; }
 
-/* Mini-gráfica de RPM en vivo (altura fija, proporción de gráfica; anclada abajo) */
-.telem-spark { margin-top: auto; flex: none; display: flex; flex-direction: column; text-align: left; }
-.telem-spark__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
-.spark { flex: none; display: flex; flex-direction: column; }
-.spark__area { height: 92px; display: flex; gap: 6px; }
+/* Mini-gráficas en vivo (columna de 3 que llena la altura sobrante del riel) */
+.telem-charts { margin-top: var(--space-3); flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.mini-chart { flex: 1; min-height: 0; display: flex; flex-direction: column; text-align: left; }
+.telem-spark__label { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+.spark { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.spark__area { flex: 1; min-height: 48px; display: flex; gap: 6px; }
 .spark__yaxis {
   display: flex; flex-direction: column; justify-content: space-between;
-  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
-  text-align: right; width: 26px; padding: 1px 0;
+  font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim);
+  text-align: right; width: 28px; padding: 1px 0;
 }
 .spark__plot {
   flex: 1; position: relative;
@@ -119,6 +120,6 @@
 }
 .spark__plot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .spark__xaxis {
-  display: flex; justify-content: space-between; margin-left: 32px; margin-top: 4px;
-  font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim);
+  display: flex; justify-content: space-between; margin-left: 34px; margin-top: 4px;
+  font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim);
 }
