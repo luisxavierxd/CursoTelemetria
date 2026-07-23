@@ -161,13 +161,68 @@
     return f;
   }
 
+  function renderModel(data) {
+    if (!data.model) return null;
+    var m = data.model;
+    var slot;
+    if (m.src) {
+      var mv = el('model-viewer', {
+        src: m.src, alt: m.alt || m.label || 'Modelo 3D',
+        'camera-controls': '', 'auto-rotate': '', 'interaction-prompt': 'none',
+        'shadow-intensity': '1'
+      }, []);
+      if (m.poster) mv.setAttribute('poster', m.poster);
+      slot = el('div', { class: 'model-slot' }, [mv]);
+      setTimeout(function () {
+        if (window.TelemetrySims && window.TelemetrySims._util) {
+          window.TelemetrySims._util.scrollRotate(mv);
+        }
+      }, 0);
+    } else {
+      slot = el('div', { class: 'model-slot is-placeholder' }, [
+        el('div', {}, [
+          el('span', { class: 'model-slot__label' }, ['Modelo 3D: ' + (m.label || 'componente')]),
+          el('span', { class: 'model-slot__hint' }, ['suelta el .glb aquí'])
+        ])
+      ]);
+    }
+    return el('div', { class: 'reveal', style: 'margin-top:1.5rem;' }, [slot]);
+  }
+
+  function renderSimulator(data) {
+    if (!data.simulator || !window.TelemetrySims || !window.TelemetrySims[data.simulator.type]) return null;
+    var sim = data.simulator;
+    var body = el('div', { class: 'sim__mount' }, []);
+    var section = el('section', { class: 'session-section' }, [
+      el('div', { class: 'container' }, [
+        el('h2', { class: 'reveal' }, ['Laboratorio interactivo']),
+        el('div', { class: 'sim reveal' }, [
+          el('div', { class: 'sim__head' }, [
+            el('h3', {}, [sim.title || 'Simulador']),
+            sim.caption ? el('p', {}, [sim.caption]) : null
+          ]),
+          body
+        ])
+      ])
+    ]);
+    setTimeout(function () { window.TelemetrySims[sim.type](body); }, 0);
+    return section;
+  }
+
   function render(data) {
     var root = document.getElementById('session-root');
     root.appendChild(renderHeader(data));
     root.appendChild(renderHero(data));
+    var modelNode = renderModel(data);
+    if (modelNode) {
+      var heroContainer = root.querySelector('.session-hero .container');
+      if (heroContainer) heroContainer.appendChild(modelNode);
+    }
     root.appendChild(renderContent(data));
     root.appendChild(renderConnection(data));
     root.appendChild(renderReference(data));
+    var simNode = renderSimulator(data);
+    if (simNode) root.appendChild(simNode);
     if (data.errors && data.errors.length) root.appendChild(renderErrors(data));
     var safety = renderSafety(data);
     if (safety) root.appendChild(safety);
