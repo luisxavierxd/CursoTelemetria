@@ -110,18 +110,27 @@
     var track = svg.querySelector('.monaco-track');
     var dot = svg.querySelector('.monaco-dot');
     monacoScrollFade(svg);
+    if (!track || !dot) return;
+    var LAP = 22000;
+    var st = monacoState();
+    var total = track.getTotalLength();
+
+    // El punto se posiciona con cx/cy (geometría SVG) para que siempre caiga
+    // exacto sobre la ruta, sin importar el viewBox.
+    function place(frac) {
+      var p = track.getPointAtLength(frac * total);
+      dot.setAttribute('cx', p.x);
+      dot.setAttribute('cy', p.y);
+    }
+
     if (reducedMotion() || typeof anime === 'undefined') {
-      if (track) { track.style.strokeDasharray = 'none'; track.style.strokeDashoffset = 0; }
-      if (dot && track) {
-        var start = track.getPointAtLength(0);
-        dot.setAttribute('cx', start.x);
-        dot.setAttribute('cy', start.y);
-      }
+      track.style.strokeDasharray = 'none';
+      track.style.strokeDashoffset = 0;
+      place(((Date.now() - st.start) % LAP) / LAP);
       return;
     }
-    // Continuidad entre páginas: si ya se dibujó en esta pestaña, no re-animar el
-    // trazo, y arrancar el punto en la fase donde iba (no reiniciar en cero).
-    var st = monacoState();
+
+    // Continuidad entre páginas: si ya se dibujó en esta pestaña, no re-animar el trazo.
     if (st.drawn) {
       track.style.strokeDasharray = 'none';
       track.style.strokeDashoffset = 0;
@@ -129,17 +138,14 @@
       anime({ targets: track, strokeDashoffset: [anime.setDashoffset, 0], easing: 'easeInOutSine', duration: 2600 });
       try { sessionStorage.setItem('monacoDrawn', '1'); } catch (e) {}
     }
-    var LAP = 22000;
-    var path = anime.path('.bg-monaco .monaco-track');
-    var anim = anime({
-      targets: dot,
-      translateX: path('x'),
-      translateY: path('y'),
-      easing: 'linear',
-      duration: LAP,
-      loop: true
-    });
-    anim.seek((Date.now() - st.start) % LAP);
+
+    // La vuelta del punto se deriva del reloj compartido (epoch en sessionStorage),
+    // así continúa exactamente donde iba al cambiar de página, sin reiniciarse.
+    function tick() {
+      place(((Date.now() - st.start) % LAP) / LAP);
+      requestAnimationFrame(tick);
+    }
+    tick();
   }
 
   // Estado persistente del circuito en la pestaña (sobrevive al cambio de página).
