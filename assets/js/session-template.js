@@ -153,7 +153,7 @@
     root.appendChild(renderContent(data));
     root.appendChild(renderConnection(data));
     root.appendChild(renderReference(data));
-    root.appendChild(renderErrors(data));
+    if (data.errors && data.errors.length) root.appendChild(renderErrors(data));
     var safety = renderSafety(data);
     if (safety) root.appendChild(safety);
     root.appendChild(renderBiblio(data));
