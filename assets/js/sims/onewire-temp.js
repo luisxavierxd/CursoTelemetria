@@ -32,13 +32,13 @@
         readT.textContent = '-85 °C (errático)';
         pill.textContent = 'sin pull-up';
         pill.className = 'sim__pill sim__pill--crit';
-        return;
+        return 'nopull';
       }
       var t = parseFloat(range.value);
       readT.textContent = t + ' °C';
-      if (t >= thresholds.crit) { pill.textContent = 'CRÍTICO'; pill.className = 'sim__pill sim__pill--crit'; }
-      else if (t >= thresholds.warn) { pill.textContent = 'advertencia'; pill.className = 'sim__pill sim__pill--warn'; }
-      else { pill.textContent = 'normal'; pill.className = 'sim__pill sim__pill--ok'; }
+      if (t >= thresholds.crit) { pill.textContent = '🔥 CRÍTICO'; pill.className = 'sim__pill sim__pill--crit'; return 'crit'; }
+      if (t >= thresholds.warn) { pill.textContent = 'advertencia'; pill.className = 'sim__pill sim__pill--warn'; return 'warn'; }
+      pill.textContent = 'normal'; pill.className = 'sim__pill sim__pill--ok'; return 'ok';
     }
     return { el: el, range: range, update: update };
   }
@@ -48,24 +48,29 @@
     var cvt = sensor('DS18B20 — CVT (adv >90°C, crítico >105°C)', '28-FF-3C-9B-cvt', { warn: 90, crit: 105 });
     var pullup = h('input', { type: 'checkbox' });
     pullup.checked = true;
+    var wasCrit = false;
+
+    var note = h('div', { class: 'sim__readout' }, [
+      h('div', {}, [h('span', { class: 'k' }, ['Ambos sensores comparten UN cable de datos (bus OneWire); el código los distingue por su ROM.'])])
+    ]);
+    var stage = h('div', { class: 'sim__stage' }, [note]);
 
     function refresh() {
-      motor.update(pullup.checked);
-      cvt.update(pullup.checked);
+      var a = motor.update(pullup.checked);
+      var b = cvt.update(pullup.checked);
+      var isCrit = a === 'crit' || b === 'crit';
+      if (isCrit && !wasCrit && window.TelemetrySims._util) window.TelemetrySims._util.alarm(stage);
+      wasCrit = isCrit;
     }
     motor.range.addEventListener('input', refresh);
     cvt.range.addEventListener('input', refresh);
     pullup.addEventListener('change', refresh);
 
-    var note = h('div', { class: 'sim__readout' }, [
-      h('div', {}, [h('span', { class: 'k' }, ['Ambos sensores comparten UN cable de datos (bus OneWire); el código los distingue por su ROM.'])])
-    ]);
     var pullCtrl = h('label', { style: 'display:flex;gap:8px;align-items:center;font-size:0.85rem;' }, [
       pullup, 'Resistencia pull-up 4.7kΩ conectada'
     ]);
 
     var controls = h('div', { class: 'sim__controls' }, [motor.el, cvt.el, pullCtrl]);
-    var stage = h('div', { class: 'sim__stage' }, [note]);
     container.appendChild(h('div', { class: 'sim__body sim__body--split' }, [controls, stage]));
     refresh();
   };

@@ -30,6 +30,7 @@
     var readAdc = h('span', { class: 'v' }, ['0']);
     var readAngle = h('span', { class: 'v' }, ['0']);
     var pill = h('span', { class: 'sim__pill sim__pill--ok' }, ['normal']);
+    var wasAlert = false;
 
     var bar = h('div', {}, []);
     bar.style.cssText = 'height:14px;border-radius:7px;background:var(--blue-royal);transition:width .1s, background .1s;';
@@ -53,12 +54,15 @@
       bar.style.width = (deg / DEG_MAX * 100) + '%';
       if (deg > ALERT_DEG) {
         bar.style.background = 'var(--signal-amber)';
-        pill.textContent = 'ALERTA >25°';
+        pill.textContent = '⚠ ALERTA >25°';
         pill.className = 'sim__pill sim__pill--warn';
+        if (!wasAlert && window.TelemetrySims._util) window.TelemetrySims._util.alarm(stage);
+        wasAlert = true;
       } else {
         bar.style.background = 'var(--blue-royal)';
         pill.textContent = 'normal';
         pill.className = 'sim__pill sim__pill--ok';
+        wasAlert = false;
       }
     }
     angleRange.addEventListener('input', update);

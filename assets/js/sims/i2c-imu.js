@@ -36,14 +36,23 @@
     var thRange = h('input', { type: 'range', min: '5', max: '30', step: '1', value: '20' });
     var readAcc = h('span', { class: 'v' }, ['9.8']);
     var evPill = h('span', { class: 'sim__pill sim__pill--ok' }, ['sin evento']);
+    var wasImpact = false;
 
     function refreshImu() {
       var tilt = parseFloat(tiltRange.value);
       var th = parseFloat(thRange.value);
       var mag = Math.sqrt(9.8 * 9.8 + tilt * tilt);
       readAcc.textContent = mag.toFixed(1) + ' m/s²';
-      if (tilt >= th) { evPill.textContent = 'impacto/rollover detectado'; evPill.className = 'sim__pill sim__pill--warn'; }
-      else { evPill.textContent = 'sin evento'; evPill.className = 'sim__pill sim__pill--ok'; }
+      if (tilt >= th) {
+        evPill.textContent = '💥 impacto/rollover detectado';
+        evPill.className = 'sim__pill sim__pill--crit';
+        if (!wasImpact && window.TelemetrySims._util) window.TelemetrySims._util.alarm(stage);
+        wasImpact = true;
+      } else {
+        evPill.textContent = 'sin evento';
+        evPill.className = 'sim__pill sim__pill--ok';
+        wasImpact = false;
+      }
     }
     tiltRange.addEventListener('input', refreshImu);
     thRange.addEventListener('input', refreshImu);

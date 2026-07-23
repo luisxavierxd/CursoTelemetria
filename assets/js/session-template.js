@@ -42,9 +42,8 @@
       el('div', { class: 'badges' }, data.badges.map(function (b) { return el('span', { class: 'badge' }, [b]); })),
       el('div', { class: 'session-hero__trace-wrap', html: traceSvg })
     ];
-    if (data.photoPlaceholder) {
-      children.push(el('div', { class: 'photo-placeholder reveal', style: 'margin-top:1.5rem;max-width:420px;' }, [data.photoPlaceholder]));
-    }
+    // El componente principal se muestra como modelo 3D (renderModel); las fotos
+    // de material/circuito viven en la Práctica de Notion, no aquí.
     return el('section', { class: 'session-hero' }, [
       el('div', { class: 'container' }, children)
     ]);
