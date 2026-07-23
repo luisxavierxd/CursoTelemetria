@@ -38,7 +38,7 @@ window.SESSION_DATA = {
         'Todos esos datos llegan a un <strong>dashboard</strong> (Grafana): gráficas y gauges en vivo. Tiene dos caras: <strong>LIVE</strong> (RPM, velocidad, temperaturas de motor/CVT, voltaje, mapa GPS coloreado por velocidad) y <strong>ANÁLISIS</strong> (máximos de la sesión, comparativas, histórico).',
         'Al verlo en la demo, identifica qué sensor de los que ya programaste alimenta cada panel: tu DS18B20 de la Sesión 3 son las gráficas de temperatura; tu MPU6050 de la Sesión 4, una alerta de impacto.'
       ],
-      diagram: { src: '../assets/img/diagrams/telemetry-pipeline.svg', alt: 'Pipeline de telemetría de MadRams', caption: 'Del coche a la pantalla: LoRa en vivo + respaldo en SD, terminando en Grafana.' },
+      diagram: { src: '../assets/img/diagrams/telemetry-pipeline.svg', alt: 'Pipeline de telemetría de MadRams', caption: 'Del coche a la pantalla: LoRa en vivo + respaldo en SD, terminando en Grafana.', wide: true },
       teacher: 'Pídeles conectar cada panel con el sensor que lo alimenta. Cierra el círculo del curso: todo lo que armaron alimenta esto.' },
 
     { type: 'concept', heading: 'Radio LoRa: 915MHz y paquetes',

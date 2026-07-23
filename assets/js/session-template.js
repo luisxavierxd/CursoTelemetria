@@ -239,7 +239,7 @@
     (b.body || []).forEach(function (para) { inner.push(el('p', { html: para })); });
     if (b.code) inner.push(el('pre', { class: 'formula' }, [b.code]));
     if (b.diagram) {
-      inner.push(el('figure', { class: 'diagram' }, [
+      inner.push(el('figure', { class: 'diagram' + (b.diagram.wide ? ' diagram--wide' : '') }, [
         el('img', { src: b.diagram.src, alt: b.diagram.alt, loading: 'lazy' }),
         b.diagram.caption ? el('figcaption', { class: 'table-caption' }, [b.diagram.caption]) : null
       ]));

@@ -1,37 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 210" width="100%" role="img" aria-labelledby="tp-title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 224" width="100%" role="img" aria-labelledby="tp-title">
   <title id="tp-title">Pipeline de telemetría de MadRams: ESP32 transmite por LoRa 915MHz a un receptor en pits, que guarda en InfluxDB y muestra en Grafana; en paralelo el ESP32 graba un respaldo en la tarjeta SD.</title>
-  <rect width="580" height="210" fill="#131B2E"/>
+  <rect width="580" height="224" fill="#131B2E"/>
   <defs>
     <marker id="tp-arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
       <path d="M0 0 L6 3 L0 6 z" fill="#6C8CFF"/>
     </marker>
   </defs>
 
-  <g font-family="monospace" font-size="11">
+  <g font-family="monospace" font-size="14">
     <!-- fila principal, 5 cajas -->
-    <rect x="16" y="66" width="86" height="44" rx="6" fill="none" stroke="#E8ECF6" stroke-width="2"/>
+    <rect x="16" y="64" width="86" height="48" rx="6" fill="none" stroke="#E8ECF6" stroke-width="2"/>
     <text x="59" y="86" text-anchor="middle" fill="#E8ECF6">ESP32</text>
-    <text x="59" y="100" text-anchor="middle" fill="#8A93AC" font-size="8.5">en el coche</text>
+    <text x="59" y="102" text-anchor="middle" fill="#8A93AC" font-size="10.5">en el coche</text>
 
-    <rect x="132" y="66" width="86" height="44" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
+    <rect x="132" y="64" width="86" height="48" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
     <text x="175" y="86" text-anchor="middle" fill="#FFB13D">LoRa</text>
-    <text x="175" y="100" text-anchor="middle" fill="#8A93AC" font-size="8.5">915 MHz</text>
+    <text x="175" y="102" text-anchor="middle" fill="#8A93AC" font-size="10.5">915 MHz</text>
 
-    <rect x="248" y="66" width="86" height="44" rx="6" fill="none" stroke="#E8ECF6" stroke-width="2"/>
+    <rect x="248" y="64" width="86" height="48" rx="6" fill="none" stroke="#E8ECF6" stroke-width="2"/>
     <text x="291" y="86" text-anchor="middle" fill="#E8ECF6">Receptor</text>
-    <text x="291" y="100" text-anchor="middle" fill="#8A93AC" font-size="8.5">en pits</text>
+    <text x="291" y="102" text-anchor="middle" fill="#8A93AC" font-size="10.5">en pits</text>
 
-    <rect x="364" y="66" width="86" height="44" rx="6" fill="none" stroke="#2547E0" stroke-width="2"/>
-    <text x="407" y="90" text-anchor="middle" fill="#6C8CFF">InfluxDB</text>
+    <rect x="364" y="64" width="86" height="48" rx="6" fill="none" stroke="#2547E0" stroke-width="2"/>
+    <text x="407" y="92" text-anchor="middle" fill="#6C8CFF">InfluxDB</text>
 
-    <rect x="480" y="66" width="86" height="44" rx="6" fill="none" stroke="#2547E0" stroke-width="2"/>
+    <rect x="480" y="64" width="86" height="48" rx="6" fill="none" stroke="#2547E0" stroke-width="2"/>
     <text x="523" y="86" text-anchor="middle" fill="#6C8CFF">Grafana</text>
-    <text x="523" y="100" text-anchor="middle" fill="#8A93AC" font-size="8.5">dashboard</text>
+    <text x="523" y="102" text-anchor="middle" fill="#8A93AC" font-size="10.5">dashboard</text>
 
     <!-- respaldo SD -->
-    <rect x="16" y="150" width="86" height="44" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
-    <text x="59" y="170" text-anchor="middle" fill="#FFB13D">SD</text>
-    <text x="59" y="184" text-anchor="middle" fill="#8A93AC" font-size="8.5">respaldo CSV</text>
+    <rect x="16" y="150" width="86" height="48" rx="6" fill="none" stroke="#FFB13D" stroke-width="2"/>
+    <text x="59" y="172" text-anchor="middle" fill="#FFB13D">SD</text>
+    <text x="59" y="188" text-anchor="middle" fill="#8A93AC" font-size="10.5">respaldo CSV</text>
   </g>
 
   <!-- flechas -->
@@ -39,7 +39,7 @@
   <line x1="218" y1="88" x2="246" y2="88" stroke="#6C8CFF" stroke-width="2" marker-end="url(#tp-arrow)"/>
   <line x1="334" y1="88" x2="362" y2="88" stroke="#6C8CFF" stroke-width="2" marker-end="url(#tp-arrow)"/>
   <line x1="450" y1="88" x2="478" y2="88" stroke="#6C8CFF" stroke-width="2" marker-end="url(#tp-arrow)"/>
-  <line x1="59" y1="110" x2="59" y2="148" stroke="#6C8CFF" stroke-width="2" marker-end="url(#tp-arrow)"/>
+  <line x1="59" y1="112" x2="59" y2="148" stroke="#6C8CFF" stroke-width="2" marker-end="url(#tp-arrow)"/>
 
-  <text x="300" y="205" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="9.5">SD @10Hz (respaldo denso)  ·  LoRa @2Hz (en vivo)</text>
+  <text x="300" y="210" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="11.5">SD @10Hz (respaldo denso)  ·  LoRa @2Hz (en vivo)</text>
 </svg>
