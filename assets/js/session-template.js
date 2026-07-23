@@ -269,13 +269,118 @@
     ]);
   }
 
-  function renderLesson(data) {
-    return data.lesson.map(function (b) {
-      if (b.type === 'lab') return buildSimSection(data.simulator, b.heading);
-      if (b.type === 'callout') return renderCalloutBlock(b);
-      if (b.type === 'diagram') return renderDiagramBlock(b);
-      return renderConceptBlock(b);
+  function renderLesson(data, sink) {
+    return data.lesson.map(function (b, i) {
+      var node;
+      if (b.type === 'lab') node = buildSimSection(data.simulator, b.heading);
+      else if (b.type === 'callout') node = renderCalloutBlock(b);
+      else if (b.type === 'diagram') node = renderDiagramBlock(b);
+      else node = renderConceptBlock(b);
+      // Los conceptos y el laboratorio (con encabezado) alimentan el índice lateral.
+      if (node && b.heading && b.type !== 'callout' && b.type !== 'diagram') {
+        node.id = 'sec-' + i;
+        var short = b.heading.split(':')[0].split(' (')[0];
+        sink.push({ id: 'sec-' + i, label: short });
+      }
+      return node;
     });
+  }
+
+  // ---- Rieles laterales (pantallas anchas): índice + telemetría ambiental ----
+  function buildScrollSpy(sections) {
+    if (!sections.length) return null;
+    var links = [];
+    var ul = el('ul', { class: 'spy' }, sections.map(function (s) {
+      var a = el('a', { href: '#' + s.id, 'data-spy': s.id }, [s.label]);
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var target = document.getElementById(s.id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      links.push(a);
+      return el('li', {}, [a]);
+    }));
+    var nav = el('nav', { class: 'side-rail side-rail--left', 'aria-label': 'Índice de la sesión' }, [
+      el('div', { class: 'side-rail__label' }, ['En esta sesión']),
+      ul
+    ]);
+    // Resaltar el tema visible al hacer scroll.
+    setTimeout(function () {
+      if (!('IntersectionObserver' in window)) return;
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          links.forEach(function (a) {
+            a.classList.toggle('is-active', a.getAttribute('data-spy') === en.target.id);
+          });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach(function (s) {
+        var t = document.getElementById(s.id);
+        if (t) obs.observe(t);
+      });
+    }, 0);
+    return nav;
+  }
+
+  function buildTelemetry() {
+    var metrics = [
+      { k: 'RPM', min: 1800, max: 5200, val: 3200, dec: 0, bar: true, hot: 4600 },
+      { k: 'MOTOR °C', min: 78, max: 116, val: 92, dec: 0, bar: true, hot: 110, suffix: '°' },
+      { k: 'CVT °C', min: 70, max: 108, val: 86, dec: 0, bar: true, hot: 105, suffix: '°' },
+      { k: 'FUERZA G', min: 0, max: 2.4, val: 0.8, dec: 1, bar: true, hot: 1.8 },
+      { k: 'VEL km/h', min: 0, max: 68, val: 34, dec: 0, bar: true },
+      { k: 'BAT V', min: 12.1, max: 14.2, val: 13.4, dec: 1 }
+    ];
+    var rows = metrics.map(function (m) {
+      m.vEl = el('span', { class: 'telem__v' }, ['—']);
+      var kids = [el('span', { class: 'telem__k' }, [m.k]), m.vEl];
+      var row = [el('div', { class: 'telem__row' }, kids)];
+      if (m.bar) { m.barEl = el('span', {}, []); row.push(el('div', { class: 'telem__bar' }, [m.barEl])); }
+      return el('div', {}, row);
+    });
+    var latEl = el('span', { class: 'telem__v' }, ['—']);
+    var lonEl = el('span', { class: 'telem__v' }, ['—']);
+    rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LAT']), latEl]));
+    rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LON']), lonEl]));
+
+    var aside = el('aside', { class: 'side-rail side-rail--right', 'aria-hidden': 'true' }, [
+      el('div', { class: 'side-rail__label' }, ['Telemetría · demo']),
+      el('div', { class: 'telem' }, rows)
+    ]);
+
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var lat = 19.4326, lon = -99.1332;
+    function step() {
+      metrics.forEach(function (m) {
+        var span = (m.max - m.min);
+        m.val += (Math.random() - 0.5) * span * 0.18;
+        if (m.val < m.min) m.val = m.min;
+        if (m.val > m.max) m.val = m.max;
+        m.vEl.textContent = m.val.toFixed(m.dec) + (m.suffix || '');
+        var hot = m.hot && m.val >= m.hot;
+        m.vEl.classList.toggle('is-hot', !!hot);
+        if (m.barEl) {
+          m.barEl.style.width = ((m.val - m.min) / span * 100).toFixed(0) + '%';
+          m.barEl.style.background = hot ? 'var(--signal-amber)' : 'var(--blue-royal)';
+        }
+      });
+      lat += (Math.random() - 0.5) * 0.0009;
+      lon += (Math.random() - 0.5) * 0.0009;
+      latEl.textContent = lat.toFixed(4);
+      lonEl.textContent = lon.toFixed(4);
+    }
+    step();
+    if (!reduced) setInterval(step, 900);
+    return aside;
+  }
+
+  function renderSideRails(sections) {
+    var rails = [];
+    var spy = buildScrollSpy(sections);
+    if (spy) rails.push(spy);
+    rails.push(buildTelemetry());
+    return rails;
   }
 
   function render(data) {
@@ -290,8 +395,10 @@
     if (data.lesson && data.lesson.length) {
       // Flujo de presentación: conceptos explicados, diagramas y el laboratorio
       // embebido en el orden que definan los datos.
-      renderLesson(data).forEach(function (node) { if (node) root.appendChild(node); });
+      var sections = [];
+      renderLesson(data, sections).forEach(function (node) { if (node) root.appendChild(node); });
       root.appendChild(renderReference(data));
+      renderSideRails(sections).forEach(function (r) { if (r) root.appendChild(r); });
     } else {
       // Retrocompatibilidad (p. ej. sesión 6): bullets + conexión + lab suelto.
       root.appendChild(renderContent(data));
