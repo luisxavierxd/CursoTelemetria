@@ -108,6 +108,7 @@
     if (!svg) return;
     var track = svg.querySelector('.monaco-track');
     var dot = svg.querySelector('.monaco-dot');
+    monacoScrollFade(svg);
     if (reducedMotion() || typeof anime === 'undefined') {
       if (track) { track.style.strokeDasharray = 'none'; track.style.strokeDashoffset = 0; }
       if (dot && track) {
@@ -117,22 +118,49 @@
       }
       return;
     }
-    anime({
-      targets: track,
-      strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeInOutSine',
-      duration: 2600
-    });
+    // Continuidad entre páginas: si ya se dibujó en esta pestaña, no re-animar el
+    // trazo, y arrancar el punto en la fase donde iba (no reiniciar en cero).
+    var st = monacoState();
+    if (st.drawn) {
+      track.style.strokeDasharray = 'none';
+      track.style.strokeDashoffset = 0;
+    } else {
+      anime({ targets: track, strokeDashoffset: [anime.setDashoffset, 0], easing: 'easeInOutSine', duration: 2600 });
+      try { sessionStorage.setItem('monacoDrawn', '1'); } catch (e) {}
+    }
+    var LAP = 22000;
     var path = anime.path('.bg-monaco .monaco-track');
-    anime({
+    var anim = anime({
       targets: dot,
       translateX: path('x'),
       translateY: path('y'),
       easing: 'linear',
-      duration: 22000,
-      loop: true,
-      delay: 800
+      duration: LAP,
+      loop: true
     });
+    anim.seek((Date.now() - st.start) % LAP);
+  }
+
+  // Estado persistente del circuito en la pestaña (sobrevive al cambio de página).
+  function monacoState() {
+    try {
+      var start = sessionStorage.getItem('monacoStart');
+      if (!start) { start = String(Date.now()); sessionStorage.setItem('monacoStart', start); }
+      return { start: parseInt(start, 10), drawn: sessionStorage.getItem('monacoDrawn') === '1' };
+    } catch (e) {
+      return { start: Date.now(), drawn: false };
+    }
+  }
+
+  // Más opaco en la parte superior (altura inicial) y se desvanece al scrollear.
+  function monacoScrollFade(svg) {
+    function apply() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var progress = Math.max(0, Math.min(1, window.pageYOffset / (vh * 0.9)));
+      svg.style.opacity = (1 - progress * 0.72).toFixed(3); // 1.0 arriba → 0.28 al bajar
+    }
+    window.addEventListener('scroll', apply, { passive: true });
+    apply();
   }
 
   function init() {

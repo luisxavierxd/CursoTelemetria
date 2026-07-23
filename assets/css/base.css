@@ -209,8 +209,5 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
   overflow: hidden;
 }
 .bg-monaco svg { width: min(92vw, 900px); height: auto; max-height: 86vh; }
-.bg-monaco .monaco-track { stroke-opacity: 0.1; stroke-dasharray: 1600; }
-.bg-monaco .monaco-dot { opacity: 0.5; filter: drop-shadow(0 0 6px rgba(255, 177, 61, 0.9)); }
-@media (prefers-reduced-motion: reduce) {
-  .bg-monaco .monaco-dot { opacity: 0.3; }
-}
+.bg-monaco .monaco-track { stroke-opacity: 0.22; stroke-dasharray: 1600; }
+.bg-monaco .monaco-dot { opacity: 0.65; filter: drop-shadow(0 0 6px rgba(255, 177, 61, 0.9)); }
