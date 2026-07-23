@@ -31,6 +31,7 @@ window.SESSION_DATA = {
         'Un <strong>IMU</strong> combina dos sensores: un <strong>acelerómetro</strong> (mide aceleración lineal en X, Y, Z) y un <strong>giroscopio</strong> (mide rotación). El MPU6050 trae ambos.',
         'Truco de verificación: la librería regresa la aceleración en m/s²; en reposo, el eje que apunta hacia abajo debe marcar <span class="value-hl">≈9.8 m/s²</span> (la gravedad). Si no marca eso en reposo, el sensor está mal conectado o mal leído.'
       ],
+      diagram: { src: '../assets/img/diagrams/accelerometer-axes.svg', alt: 'Ejes X, Y, Z del acelerómetro y el vector de gravedad', caption: 'Tres ejes de aceleración; en reposo, el eje vertical mide la gravedad (≈9.8 m/s²).' },
       teacher: 'La gravedad siempre presente (9.8) es el "check de cordura". Que lo usen antes de perseguir bugs raros.' },
 
     { type: 'concept', heading: 'Umbral: convertir números en eventos',
@@ -38,6 +39,7 @@ window.SESSION_DATA = {
         'Leer aceleración no basta; hay que <strong>decidir</strong>. Un <strong>umbral</strong> es el valor a partir del cual disparas un evento: si la aceleración pasa de cierto nivel, registras un <strong>impacto</strong> o un <strong>rollover</strong> (volcadura) — información de seguridad del piloto.',
         'El valor del umbral es arbitrario y depende de qué tan fuerte sea el golpe que quieres detectar: conviene probar en vivo (golpes suaves vs. fuertes) y ajustar, en vez de asumir un número fijo.'
       ],
+      diagram: { src: '../assets/img/diagrams/impact-threshold.svg', alt: 'Gráfica de aceleración cruzando la línea de umbral', caption: 'Mientras la señal no cruce el umbral no pasa nada; al superarlo se dispara el evento.' },
       teacher: 'No hay umbral universal. Que jueguen con el slider del laboratorio para sentir la diferencia entre detectar todo (ruido) y detectar solo golpes reales.' },
 
     { type: 'lab', heading: 'Pruébalo: direcciones, conflicto y umbral de impacto' }

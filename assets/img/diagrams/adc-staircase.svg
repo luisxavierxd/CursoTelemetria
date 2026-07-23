@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 210" width="100%" role="img" aria-labelledby="adc-title">
+  <title id="adc-title">El ADC convierte un voltaje analógico continuo (0 a 5V) en un número discreto entre 0 y 1023: la rampa suave del voltaje se aproxima con escalones.</title>
+  <rect width="340" height="210" fill="#131B2E"/>
+
+  <!-- ejes -->
+  <line x1="44" y1="20" x2="44" y2="170" stroke="#8A93AC" stroke-width="1.5"/>
+  <line x1="44" y1="170" x2="320" y2="170" stroke="#8A93AC" stroke-width="1.5"/>
+  <text x="22" y="96" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="9" transform="rotate(-90 22 96)">valor ADC</text>
+  <text x="180" y="196" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="9">voltaje de entrada (0–5V)</text>
+  <text x="40" y="26" text-anchor="end" fill="#8A93AC" font-family="monospace" font-size="9">1023</text>
+  <text x="40" y="170" text-anchor="end" fill="#8A93AC" font-family="monospace" font-size="9">0</text>
+
+  <!-- rampa analógica ideal -->
+  <line x1="44" y1="170" x2="312" y2="24" stroke="#8A93AC" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="250" y="150" fill="#8A93AC" font-family="monospace" font-size="9">analógico</text>
+
+  <!-- escalones del ADC -->
+  <polyline points="44,170 78,170 78,146 112,146 112,122 146,122 146,98 180,98 180,74 214,74 214,50 248,50 248,32 282,32 282,24 312,24"
+    fill="none" stroke="#6C8CFF" stroke-width="2"/>
+  <text x="150" y="60" fill="#6C8CFF" font-family="monospace" font-size="9">digital (0–1023)</text>
+</svg>

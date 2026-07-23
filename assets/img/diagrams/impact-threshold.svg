@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 210" width="100%" role="img" aria-labelledby="th-title">
+  <title id="th-title">Aceleración a lo largo del tiempo: la señal se mantiene baja hasta que un golpe la hace superar la línea de umbral, disparando un evento de impacto.</title>
+  <rect width="360" height="210" fill="#131B2E"/>
+
+  <!-- ejes -->
+  <line x1="40" y1="20" x2="40" y2="175" stroke="#8A93AC" stroke-width="1.5"/>
+  <line x1="40" y1="175" x2="340" y2="175" stroke="#8A93AC" stroke-width="1.5"/>
+  <text x="20" y="100" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="9" transform="rotate(-90 20 100)">aceleración</text>
+  <text x="190" y="198" text-anchor="middle" fill="#8A93AC" font-family="monospace" font-size="9">tiempo →</text>
+
+  <!-- umbral -->
+  <line x1="40" y1="70" x2="340" y2="70" stroke="#FFB13D" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="336" y="64" text-anchor="end" fill="#FFB13D" font-family="monospace" font-size="10">umbral</text>
+
+  <!-- señal: ruido bajo + un pico que cruza el umbral -->
+  <polyline points="40,150 70,148 100,152 130,146 160,150 180,148 195,40 205,150 240,149 270,151 300,147 340,150"
+    fill="none" stroke="#6C8CFF" stroke-width="2"/>
+
+  <!-- marcador de evento -->
+  <circle cx="199" cy="55" r="5" fill="#FF6B6B"/>
+  <text x="215" y="45" fill="#FF6B6B" font-family="monospace" font-size="10">💥 ¡impacto!</text>
+</svg>

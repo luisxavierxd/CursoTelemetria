@@ -196,3 +196,21 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .bg-ambient::before, .bg-ambient::after { animation: none; }
 }
+
+/* ===== Fondo: circuito de Mónaco centrado (todas las páginas) ===== */
+.bg-monaco {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bg-monaco svg { width: min(92vw, 900px); height: auto; max-height: 86vh; }
+.bg-monaco .monaco-track { stroke-opacity: 0.1; stroke-dasharray: 1600; }
+.bg-monaco .monaco-dot { opacity: 0.5; filter: drop-shadow(0 0 6px rgba(255, 177, 61, 0.9)); }
+@media (prefers-reduced-motion: reduce) {
+  .bg-monaco .monaco-dot { opacity: 0.3; }
+}

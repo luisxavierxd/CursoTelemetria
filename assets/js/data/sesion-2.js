@@ -23,6 +23,7 @@ window.SESSION_DATA = {
         'Ese traductor es el <strong>ADC</strong> (convertidor analógico-digital). El Arduino Uno tiene un ADC de 10 bits: convierte cualquier voltaje entre 0V y 5V en un entero entre <span class="value-hl">0 y 1023</span>.',
         'La cuenta es directa: <code>valor = (V_medido / 5V) × 1023</code>. Si el potenciómetro entrega 2.5V (la mitad), <code>analogRead()</code> regresa ~511 (la mitad de 1023).'
       ],
+      diagram: { src: '../assets/img/diagrams/adc-staircase.svg', alt: 'El ADC aproxima un voltaje continuo con escalones discretos 0-1023', caption: 'El voltaje continuo se aproxima con escalones: eso es "partir el voltaje en pasitos".' },
       teacher: 'Que noten que 10 bits = 2¹⁰ = 1024 niveles (0..1023). No hay que memorizar; sí entender que es "el voltaje partido en pasitos".' },
 
     { type: 'concept', heading: 'Divisor de voltaje: bajar 5V a 3.3V',

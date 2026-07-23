@@ -48,25 +48,6 @@
   .hero__actions { flex-direction: column; align-items: flex-start; }
 }
 
-/* Circuito de Mónaco — capa B, firma de telemetría en el hero */
-/* .hero already declares position: relative + overflow: hidden (see top of file) */
-.hero__monaco {
-  position: absolute;
-  right: 2%;
-  top: 50%;
-  transform: translateY(-50%);
-  /* Se dimensiona por altura para que el circuito completo quepa en el hero,
-     sin ser más ancho que la mitad de la pantalla. */
-  height: min(60vh, 420px);
-  width: auto;
-  max-width: 50vw;
-  opacity: 0.16;
-  z-index: 0;
-  pointer-events: none;
-}
-.hero__monaco .monaco-track { stroke-dasharray: 1600; }
-.hero__monaco .monaco-dot { filter: drop-shadow(0 0 6px rgba(255, 177, 61, 0.9)); }
+/* El circuito de Mónaco ahora es un fondo global centrado (ver .bg-monaco en base.css),
+   inyectado por animations.js en todas las páginas. */
 .hero .container { position: relative; z-index: 1; }
-@media (max-width: 720px) {
-  .hero__monaco { opacity: 0.09; height: auto; width: 92vw; max-width: none; right: -18%; }
-}
