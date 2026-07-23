@@ -6,6 +6,8 @@ window.SESSION_DATA = {
   quote: 'Cierre del curso introductorio: de sensores sueltos a construir la mitad de un sistema de adquisición real, y ver la otra mitad funcionando.',
   badges: ['1:30h (25-30 min teoría / 60-65 min práctica y demo)', 'GPS MAX-M10S + LoRa Heltec 915MHz + dashboard Grafana', 'Práctica hands-on: GPS + microSD'],
   photoPlaceholder: 'Foto: módulo GPS MAX-M10S y antena usados en la práctica',
+  simulator: { type: 'gps-lora', title: 'Laboratorio: NMEA y el paquete LoRa', caption: 'El coche recorre la pista: mira la sentencia NMEA y los bytes del paquete que viaja por radio.' },
+  model: { label: 'Módulo GPS MAX-M10S', alt: 'Modelo 3D del módulo GPS', src: '' },
   content: [
     'Qué es un GPS y qué datos entrega (lat/lng, velocidad, protocolo NMEA)',
     'Qué es una tarjeta microSD y cómo se usa como respaldo local de datos (formato CSV)',
