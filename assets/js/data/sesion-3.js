@@ -29,7 +29,7 @@ window.SESSION_DATA = {
     'Página "Temperatura — Motor & Transmisión CVT" (Notion MadRams)',
     'Página "RPM & Velocidad" (Notion MadRams)'
   ],
-  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://app.notion.com/p/3a5b2fdbb6b981d393cdf664a8a6edc6' },
+  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://balsam-ringer-081.notion.site/Pr-ctica-3a5b2fdbb6b981d393cdf664a8a6edc6' },
   prev: { label: 'Sesión 2', url: 'sesion-2.html' },
   next: { label: 'Sesión 4 — IMU y bus I2C', url: 'sesion-4.html' }
 };

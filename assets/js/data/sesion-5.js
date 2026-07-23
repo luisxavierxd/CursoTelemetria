@@ -40,7 +40,7 @@ window.SESSION_DATA = {
     'Heltec WiFi LoRa 32 V4 docs',
     'Arduino Docs — librería SD.h'
   ],
-  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://app.notion.com/p/3a5b2fdbb6b98171a79cc786f9ca83f9' },
+  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://balsam-ringer-081.notion.site/Pr-ctica-3a5b2fdbb6b98171a79cc786f9ca83f9' },
   prev: { label: 'Sesión 4', url: 'sesion-4.html' },
   next: { label: 'Sesión 6+ — Proyecto de equipo', url: 'sesion-6.html' }
 };

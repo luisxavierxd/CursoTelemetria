@@ -47,6 +47,6 @@ window.SESSION_DATA = {
     'Scherz & Monk — Practical Electronics for Inventors, McGraw-Hill (capítulos de fundamentos)',
     'Arduino Official Docs — docs.arduino.cc'
   ],
-  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://app.notion.com/p/3a5b2fdbb6b981ea8e70ebdee9da3063' },
+  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://balsam-ringer-081.notion.site/Pr-ctica-3a5b2fdbb6b981ea8e70ebdee9da3063' },
   next: { label: 'Sesión 2 — Suspensión', url: 'sesion-2.html' }
 };

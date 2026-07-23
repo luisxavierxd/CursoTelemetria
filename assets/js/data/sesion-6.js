@@ -32,6 +32,6 @@ window.SESSION_DATA = {
     'Página "Integración Telemetry Stack — MadRams LoRa Local" (Notion)',
     'Arduino Docs — librería SD.h'
   ],
-  cta: { label: 'Habla con el líder de electrónica del equipo →', url: 'https://app.notion.com/p/3a6b2fdbb6b9810498d8d9dcdc191254' },
+  cta: { label: 'Habla con el líder de electrónica del equipo →', url: 'https://balsam-ringer-081.notion.site/Pr-ctica-3a6b2fdbb6b9810498d8d9dcdc191254' },
   prev: { label: 'Sesión 5', url: 'sesion-5.html' }
 };

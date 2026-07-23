@@ -30,7 +30,7 @@ window.SESSION_DATA = {
     'Página "Suspensión — IMU & Potenciómetros" (Notion MadRams)',
     'SparkFun Learn — tutorial de I2C'
   ],
-  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://app.notion.com/p/3a5b2fdbb6b981449f11dab04448a812' },
+  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://balsam-ringer-081.notion.site/Pr-ctica-3a5b2fdbb6b981449f11dab04448a812' },
   prev: { label: 'Sesión 3', url: 'sesion-3.html' },
   next: { label: 'Sesión 5 — GPS + Demo', url: 'sesion-5.html' }
 };

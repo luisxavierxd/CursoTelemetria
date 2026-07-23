@@ -34,7 +34,7 @@ window.SESSION_DATA = {
     'Arduino Docs — analogRead(), analogWrite()',
     'Scherz & Monk — Practical Electronics for Inventors (divisores de voltaje)'
   ],
-  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://app.notion.com/p/3a5b2fdbb6b981a8a4bcffe70053f8fe' },
+  cta: { label: 'Ver instrucciones de práctica en Notion →', url: 'https://balsam-ringer-081.notion.site/Pr-ctica-3a5b2fdbb6b981a8a4bcffe70053f8fe' },
   prev: { label: 'Sesión 1', url: 'sesion-1.html' },
   next: { label: 'Sesión 3 — Temperatura', url: 'sesion-3.html' }
 };
