@@ -346,6 +346,11 @@
   }
 
   function buildTelemetry() {
+    // Estado persistente por pestaña: valores, GPS e historial de las gráficas se
+    // guardan/restauran para que la telemetría no salte al cambiar de página.
+    var saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem('telemetryState') || 'null'); } catch (e) {}
+
     var metrics = [
       { k: 'RPM', min: 1800, max: 5200, val: 3200, dec: 0, bar: true, hot: 4600 },
       { k: 'MOTOR °C', min: 78, max: 116, val: 92, dec: 0, bar: true, hot: 110, suffix: '°' },
@@ -354,6 +359,9 @@
       { k: 'VEL km/h', min: 0, max: 68, val: 34, dec: 0, bar: true },
       { k: 'BAT V', min: 12.1, max: 14.2, val: 13.4, dec: 1 }
     ];
+    if (saved && saved.metrics) metrics.forEach(function (m) {
+      if (typeof saved.metrics[m.k] === 'number') m.val = saved.metrics[m.k];
+    });
     var rows = metrics.map(function (m) {
       m.vEl = el('span', { class: 'telem__v' }, ['—']);
       var kids = [el('span', { class: 'telem__k' }, [m.k]), m.vEl];
@@ -377,7 +385,7 @@
     function metricByKey(k) { for (var i = 0; i < metrics.length; i++) if (metrics[i].k === k) return metrics[i]; }
     function fmtVal(m, v) { return v.toFixed(m.dec) + (m.suffix || ''); }
 
-    function buildMiniChart(title, metric) {
+    function buildMiniChart(title, metric, savedHist) {
       var svg = svgEl('svg', { viewBox: '0 0 100 40', preserveAspectRatio: 'none' });
       svg.appendChild(svgEl('line', { x1: 0, y1: 13.3, x2: 100, y2: 13.3, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
       svg.appendChild(svgEl('line', { x1: 0, y1: 26.6, x2: 100, y2: 26.6, stroke: '#24304A', 'stroke-width': 0.5, 'vector-effect': 'non-scaling-stroke' }));
@@ -399,7 +407,11 @@
         if (hist.length > SPN) hist.shift();
         redraw();
       }
-      for (var s = 0; s < SPN; s++) hist.push(0.3 + Math.random() * 0.4);
+      if (savedHist && savedHist.length) {
+        hist = savedHist.slice(-SPN);
+      } else {
+        for (var s = 0; s < SPN; s++) hist.push(0.3 + Math.random() * 0.4);
+      }
       redraw();
       var elChart = el('div', { class: 'mini-chart' }, [
         el('div', { class: 'telem-spark__label' }, [title]),
@@ -415,13 +427,14 @@
           el('div', { class: 'spark__xaxis' }, [el('span', {}, ['−45 s']), el('span', {}, ['ahora'])])
         ])
       ]);
-      return { el: elChart, update: update };
+      return { el: elChart, update: update, key: metric.k, getHist: function () { return hist; } };
     }
 
+    var savedHist = (saved && saved.hist) || {};
     var charts = [
-      buildMiniChart('Velocidad · km/h', metricByKey('VEL km/h')),
-      buildMiniChart('Motor · °C', metricByKey('MOTOR °C')),
-      buildMiniChart('Fuerza G', metricByKey('FUERZA G'))
+      buildMiniChart('Velocidad · km/h', metricByKey('VEL km/h'), savedHist['VEL km/h']),
+      buildMiniChart('Motor · °C', metricByKey('MOTOR °C'), savedHist['MOTOR °C']),
+      buildMiniChart('Fuerza G', metricByKey('FUERZA G'), savedHist['FUERZA G'])
     ];
 
     var aside = el('aside', { class: 'side-rail side-rail--right', 'aria-hidden': 'true' }, [
@@ -431,7 +444,8 @@
     ]);
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var lat = 19.4326, lon = -99.1332;
+    var lat = saved && typeof saved.lat === 'number' ? saved.lat : 19.4326;
+    var lon = saved && typeof saved.lon === 'number' ? saved.lon : -99.1332;
     function step() {
       metrics.forEach(function (m) {
         var span = (m.max - m.min);
@@ -451,6 +465,13 @@
       latEl.textContent = lat.toFixed(4);
       lonEl.textContent = lon.toFixed(4);
       charts.forEach(function (c) { c.update(); });
+      // Guardar el estado para continuar sin saltos en la siguiente página.
+      try {
+        var state = { metrics: {}, lat: lat, lon: lon, hist: {} };
+        metrics.forEach(function (m) { state.metrics[m.k] = m.val; });
+        charts.forEach(function (c) { state.hist[c.key] = c.getHist(); });
+        sessionStorage.setItem('telemetryState', JSON.stringify(state));
+      } catch (e) {}
     }
     step();
     if (!reduced) setInterval(step, 900);
