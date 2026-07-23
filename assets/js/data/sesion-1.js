@@ -6,7 +6,7 @@ window.SESSION_DATA = {
   quote: 'Base indispensable: sin esto nada del resto tiene sentido.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'Sin subsistema específico — base de todo el sistema', 'LED, resistencias, multímetro'],
   photoPlaceholder: 'Foto: mesa de trabajo con Arduino, protoboard, LED y multímetro del kit',
-  simulator: { type: '__smoke', title: 'Prueba', caption: 'pipeline' },
+  simulator: { type: 'ohm-law', title: 'Laboratorio: Ley de Ohm y el LED', caption: 'Ajusta resistencia y voltaje; mira cómo cambia la corriente y si el LED sobrevive.' },
   model: { label: 'Arduino Uno', alt: 'Modelo 3D de Arduino Uno', src: '' },
   content: [
     'Voltaje (V), corriente (I), resistencia (R)',

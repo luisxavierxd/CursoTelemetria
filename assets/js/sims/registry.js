@@ -35,9 +35,4 @@
     revealOnView: revealOnView,
     scrollRotate: scrollRotate
   };
-
-  // Simulador de prueba (temporal) para validar el pipeline de render.
-  window.TelemetrySims['__smoke'] = function (container) {
-    container.appendChild(document.createTextNode('Simulador de prueba OK'));
-  };
 })();
