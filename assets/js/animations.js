@@ -87,8 +87,41 @@
     });
   }
 
+  function animateMonaco() {
+    var svg = document.querySelector('.hero__monaco');
+    if (!svg) return;
+    var track = svg.querySelector('.monaco-track');
+    var dot = svg.querySelector('.monaco-dot');
+    if (reducedMotion() || typeof anime === 'undefined') {
+      if (track) track.style.strokeDashoffset = 0;
+      if (dot && track) {
+        var start = track.getPointAtLength(0);
+        dot.setAttribute('cx', start.x);
+        dot.setAttribute('cy', start.y);
+      }
+      return;
+    }
+    anime({
+      targets: track,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'easeInOutSine',
+      duration: 2200
+    });
+    var path = anime.path('.hero__monaco .monaco-track');
+    anime({
+      targets: dot,
+      translateX: path('x'),
+      translateY: path('y'),
+      easing: 'linear',
+      duration: 14000,
+      loop: true,
+      delay: 600
+    });
+  }
+
   function init() {
     drawCircuitTraces();
+    animateMonaco();
     observeReveals(document);
     animateCounters();
   }

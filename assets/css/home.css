@@ -47,3 +47,23 @@
 @media (max-width: 640px) {
   .hero__actions { flex-direction: column; align-items: flex-start; }
 }
+
+/* Circuito de Mónaco — capa B, firma de telemetría en el hero */
+/* .hero already declares position: relative + overflow: hidden (see top of file) */
+.hero__monaco {
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(52vw, 620px);
+  height: auto;
+  opacity: 0.16;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__monaco .monaco-track { stroke-dasharray: 1600; }
+.hero__monaco .monaco-dot { filter: drop-shadow(0 0 6px rgba(255, 177, 61, 0.9)); }
+.hero .container { position: relative; z-index: 1; }
+@media (max-width: 720px) {
+  .hero__monaco { opacity: 0.1; width: 90vw; right: -20%; }
+}
