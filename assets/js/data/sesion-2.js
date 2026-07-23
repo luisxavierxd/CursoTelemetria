@@ -5,6 +5,7 @@ window.SESSION_DATA = {
   title: 'Suspensión (potenciómetro)',
   quote: 'Divisor de voltaje aplicado al sensor real de suspensión.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'Potenciómetro OEM GM 15098628/29 ×4', 'Alerta si ángulo > 25°'],
+  photoPlaceholder: 'Foto: potenciómetro OEM GM 15098628/29 instalado en la suspensión real',
   content: [
     'Señales analógicas vs. digitales',
     'analogRead() — cómo el Arduino convierte voltaje a un número (ADC 0-1023)',

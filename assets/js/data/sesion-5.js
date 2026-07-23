@@ -5,6 +5,7 @@ window.SESSION_DATA = {
   title: 'GPS + Demo del sistema real (dashboard y radio)',
   quote: 'Cierre del curso introductorio: de sensores sueltos a construir la mitad de un sistema de adquisición real, y ver la otra mitad funcionando.',
   badges: ['1:30h (25-30 min teoría / 60-65 min práctica y demo)', 'GPS MAX-M10S + LoRa Heltec 915MHz + dashboard Grafana', 'Práctica hands-on: GPS + microSD'],
+  photoPlaceholder: 'Foto: módulo GPS MAX-M10S y antena usados en la práctica',
   content: [
     'Qué es un GPS y qué datos entrega (lat/lng, velocidad, protocolo NMEA)',
     'Qué es una tarjeta microSD y cómo se usa como respaldo local de datos (formato CSV)',

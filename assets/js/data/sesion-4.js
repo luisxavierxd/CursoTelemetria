@@ -5,6 +5,7 @@ window.SESSION_DATA = {
   title: 'IMU y bus I2C',
   quote: 'Introducción a I2C usando el sensor real de detección de impacto/rollover.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'MPU6050 ×2 en el mismo bus I2C', 'Chasis 0x68 / volante 0x69'],
+  photoPlaceholder: 'Foto: los dos MPU6050 instalados — chasis y volante',
   content: [
     'Qué es un bus I2C: SDA, SCL, direcciones de dispositivo',
     'Por qué varios sensores pueden compartir 2 cables',

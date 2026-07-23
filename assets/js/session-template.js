@@ -31,13 +31,17 @@
   }
 
   function renderHero(data) {
+    var children = [
+      el('span', { class: 'num' }, [data.icon + ' ' + data.number]),
+      el('h1', {}, [data.title]),
+      el('p', { class: 'quote' }, [data.quote]),
+      el('div', { class: 'badges' }, data.badges.map(function (b) { return el('span', { class: 'badge' }, [b]); }))
+    ];
+    if (data.photoPlaceholder) {
+      children.push(el('div', { class: 'photo-placeholder reveal', style: 'margin-top:1.5rem;max-width:420px;' }, [data.photoPlaceholder]));
+    }
     return el('section', { class: 'session-hero' }, [
-      el('div', { class: 'container' }, [
-        el('span', { class: 'num' }, [data.icon + ' ' + data.number]),
-        el('h1', {}, [data.title]),
-        el('p', { class: 'quote' }, [data.quote]),
-        el('div', { class: 'badges' }, data.badges.map(function (b) { return el('span', { class: 'badge' }, [b]); }))
-      ])
+      el('div', { class: 'container' }, children)
     ]);
   }
 

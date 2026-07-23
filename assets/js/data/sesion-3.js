@@ -5,6 +5,7 @@ window.SESSION_DATA = {
   title: 'Temperatura (DS18B20 + OneWire)',
   quote: 'Bus OneWire + calibración segura de un sensor real, sin riesgos de quemadura.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'DS18B20 en motor/CVT · dos sensores, un bus', 'Bonus: MPR121 capacitivo'],
+  photoPlaceholder: 'Foto: DS18B20 montado en motor/CVT del coche real',
   content: [
     'Bus OneWire: cómo múltiples sensores comparten un solo pin de datos',
     'Por qué monitorear temperatura de motor y CVT (riesgo de daño térmico)',
