@@ -16,7 +16,7 @@ window.SESSION_DATA = {
         'El DS18B20 se comunica por <strong>un solo cable de datos</strong> (a diferencia del I2C, que usa dos). Lo interesante: puedes poner <strong>varios</strong> DS18B20 en ese mismo cable y el Arduino los distingue sin problema.',
         '¿Cómo? Cada sensor trae grabado de fábrica un identificador único de 64 bits (su <strong>ROM address</strong>). El código pide "dame la temperatura del sensor con esta dirección" y así sabe cuál es el motor y cuál la CVT, aunque compartan el mismo pin.'
       ],
-      diagram: { src: '../assets/img/diagrams/onewire-bus.svg', alt: 'Bus OneWire con dos DS18B20 y pull-up', caption: 'Un pin de datos, dos sensores, cada uno con su ROM única; el pull-up mantiene la línea en alto.' },
+      diagram: { src: '../assets/img/diagrams/onewire-bus.svg', alt: 'Bus OneWire con dos DS18B20 y pull-up', caption: 'Un pin de datos, dos sensores, cada uno con su ROM única; el pull-up mantiene la línea en alto.', wide: true },
       teacher: 'Analogía de pasar lista: un solo pasillo (el cable), muchos alumnos (sensores); cada uno responde solo cuando dicen su nombre (ROM address).' },
 
     { type: 'concept', heading: 'La resistencia pull-up de 4.7kΩ (no es opcional)',

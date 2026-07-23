@@ -35,7 +35,7 @@ window.SESSION_DATA = {
         'Los componentes se conectan de dos formas. <strong>En serie</strong>, uno tras otro en un solo camino: la misma corriente pasa por todos y los voltajes se reparten. <strong>En paralelo</strong>, en ramas separadas entre los mismos dos puntos: todos ven el mismo voltaje y la corriente se divide entre las ramas.',
         'La resistencia del LED va <strong>en serie</strong> con el LED precisamente para que toda la corriente que llega al LED pase primero por ella y quede limitada.'
       ],
-      diagram: { src: '../assets/img/diagrams/series-parallel.svg', alt: 'Circuitos en serie y en paralelo', caption: 'Serie: misma corriente, voltajes que se suman. Paralelo: mismo voltaje, corriente que se reparte.' },
+      diagram: { src: '../assets/img/diagrams/series-parallel.svg', alt: 'Circuitos en serie y en paralelo', caption: 'Serie: misma corriente, voltajes que se suman. Paralelo: mismo voltaje, corriente que se reparte.', wide: true },
       teacher: 'Error clásico: poner la resistencia "cerca" del LED pero en paralelo, no en serie. Si alguien quema un LED con la resistencia puesta, revisa esto primero.' },
 
     { type: 'concept', heading: 'Qué es un microcontrolador',
