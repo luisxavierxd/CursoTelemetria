@@ -161,11 +161,24 @@
     return f;
   }
 
+  // Carga el módulo <model-viewer> desde el CDN una sola vez, y solo cuando
+  // realmente hay un modelo 3D que mostrar (evita bajar un módulo grande en
+  // páginas que aún usan placeholder).
+  function ensureModelViewer() {
+    if (document.getElementById('model-viewer-cdn')) return;
+    var s = document.createElement('script');
+    s.id = 'model-viewer-cdn';
+    s.type = 'module';
+    s.src = 'https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js';
+    document.head.appendChild(s);
+  }
+
   function renderModel(data) {
     if (!data.model) return null;
     var m = data.model;
     var slot;
     if (m.src) {
+      ensureModelViewer();
       var mv = el('model-viewer', {
         src: m.src, alt: m.alt || m.label || 'Modelo 3D',
         'camera-controls': '', 'auto-rotate': '', 'interaction-prompt': 'none',

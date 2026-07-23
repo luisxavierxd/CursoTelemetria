@@ -31,6 +31,7 @@
     var svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('viewBox', '0 0 200 120');
     svg.setAttribute('width', '100%');
+    svg.setAttribute('aria-hidden', 'true');
     var track = document.createElementNS(svgNS, 'path');
     track.setAttribute('d', 'M20 60 C 40 10, 160 10, 180 60 S 40 110, 20 60 Z');
     track.setAttribute('fill', 'none');
@@ -72,7 +73,8 @@
     ]);
     container.appendChild(h('div', { class: 'sim__body sim__body--split' }, [readouts, stage]));
 
+    // Bajo prefers-reduced-motion, frame() se ejecuta una sola vez y no
+    // vuelve a agendarse (el guard está en la línea de requestAnimationFrame).
     frame();
-    if (reduced && raf) cancelAnimationFrame(raf);
   };
 })();

@@ -93,7 +93,11 @@
     var track = svg.querySelector('.monaco-track');
     var dot = svg.querySelector('.monaco-dot');
     if (reducedMotion() || typeof anime === 'undefined') {
-      if (track) track.style.strokeDashoffset = 0;
+      if (track) {
+        // Trazo sólido y completo (sin depender del dasharray fijo del CSS).
+        track.style.strokeDasharray = 'none';
+        track.style.strokeDashoffset = 0;
+      }
       if (dot && track) {
         var start = track.getPointAtLength(0);
         dot.setAttribute('cx', start.x);
