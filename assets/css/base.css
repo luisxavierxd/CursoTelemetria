@@ -56,7 +56,7 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
 .site-header__brand { display: flex; align-items: center; gap: var(--space-1); font-family: var(--font-display); font-weight: 600; color: var(--text); text-decoration: none; }
-.site-header__brand img { height: 28px; width: auto; }
+.site-header__brand img { height: 40px; width: auto; }
 
 .nav-dots { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
 .nav-dots a {

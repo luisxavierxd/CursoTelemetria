@@ -17,7 +17,7 @@ Abre `http://localhost:8000/`.
 - `assets/css/` — `tokens.css` (paleta/tipografía), `base.css` (componentes compartidos), `home.css`, `sesion.css`.
 - `assets/js/animations.js` — animaciones Anime.js (traza de circuito, circuito de Mónaco con punto de telemetría, revelado al hacer scroll, contadores).
 - `assets/js/sims/` — un módulo de simulador interactivo por sesión (`ohm-law`, `voltage-divider`, `onewire-temp`, `i2c-imu`, `gps-lora`) + `registry.js` (registro compartido y utilidades). `assets/css/sims.css` los estiliza.
-- `assets/img/logo-placeholder.svg` — reemplázalo por el logo real de MadRams cuando lo tengas.
+- `assets/img/LogoMadrams.png` — logo del equipo, usado en el header y como favicon del sitio.
 - `assets/img/placeholders/` — usado como referencia para dónde van fotos reales (los placeholders visibles se generan en el propio HTML/JS, no son archivos).
 - `assets/img/diagrams/` — diagramas esquemáticos genéricos (SVG), no fotos.
 
@@ -53,7 +53,6 @@ un archivo `.glb`/`.gltf`. La sesión 6 (proyecto abierto) no lleva simulador ni
 
 ## Pendientes para el usuario
 
-- Reemplazar `assets/img/logo-placeholder.svg` por el logo real de MadRams.
 - Añadir los modelos `.glb` de los componentes principales (Arduino, potenciómetro, DS18B20, MPU6050, GPS) — ver "Simuladores y modelos 3D" arriba.
 - Reemplazar los placeholders de foto (marcados en cada sesión) por fotos reales del hardware cuando estén disponibles.
 - Actualizar los links de Notion en `assets/js/data/sesion-*.js` (`cta.url`) si las páginas de Práctica cambian de ubicación.

@@ -29,7 +29,7 @@
     return el('header', { class: 'site-header' }, [
       el('div', { class: 'container' }, [
         el('a', { class: 'site-header__brand', href: '../index.html' }, [
-          el('img', { src: '../assets/img/logo-placeholder.svg', alt: 'MadRams' }),
+          el('img', { src: '../assets/img/LogoMadrams.png', alt: 'MadRams' }),
           document.createTextNode('Curso Telemetría')
         ]),
         el('ul', { class: 'nav-dots' }, dots)
