@@ -146,3 +146,17 @@
   display: flex; justify-content: space-between; margin-left: 34px; margin-top: 4px;
   font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim);
 }
+
+/* Laptops de poca altura: el bloque de valores tiene alto fijo, así que en pantallas
+   bajas se comía ~75% del riel y aplastaba las gráficas. Aquí se compacta (menos gap,
+   letra y barras más finas) y se ocultan las filas decorativas de GPS (LAT/LON), para
+   que las mini-gráficas conserven ~la mitad del riel como en monitores altos (>820px,
+   donde se mantiene el diseño amplio). */
+@media (max-height: 820px) {
+  .telem { gap: 7px; }
+  .telem__row { font-size: 0.78rem; }
+  .telem__bar { height: 5px; margin-top: 3px; }
+  .telem__row--aux { display: none; }
+  .telem-charts { margin-top: var(--space-2); gap: var(--space-2); }
+  .spark__area { min-height: 44px; }
+}

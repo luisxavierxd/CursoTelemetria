@@ -393,8 +393,8 @@
     });
     var latEl = el('span', { class: 'telem__v' }, ['—']);
     var lonEl = el('span', { class: 'telem__v' }, ['—']);
-    rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LAT']), latEl]));
-    rows.push(el('div', { class: 'telem__row' }, [el('span', { class: 'telem__k' }, ['LON']), lonEl]));
+    rows.push(el('div', { class: 'telem__row telem__row--aux' }, [el('span', { class: 'telem__k' }, ['LAT']), latEl]));
+    rows.push(el('div', { class: 'telem__row telem__row--aux' }, [el('span', { class: 'telem__k' }, ['LON']), lonEl]));
 
     // Mini-gráficas en vivo (una por métrica), con ejes, valores y alarma en ámbar.
     var SPN = 48;
