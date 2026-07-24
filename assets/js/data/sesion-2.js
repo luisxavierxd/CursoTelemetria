@@ -6,7 +6,7 @@ window.SESSION_DATA = {
   quote: 'Divisor de voltaje aplicado al sensor real de suspensión.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'Potenciómetro OEM GM 15098628/29 ×4', 'Alerta si ángulo > 25°'],
   simulator: { type: 'voltage-divider', title: 'Laboratorio: del ángulo al ADC', caption: 'Mueve la suspensión y sigue la señal: divisor → Vout → ADC → map() → alerta.' },
-  model: { label: 'Potenciómetro OEM', alt: 'Modelo 3D de un potenciómetro', src: '../assets/models/Pot10k.glb' },
+  model: { label: 'Potenciómetro OEM', alt: 'Modelo 3D de un potenciómetro', src: '../assets/models/Pot10k.glb', orientation: '0deg 0deg -90deg' },
   lesson: [
     { type: 'callout', heading: 'Conexión con MadRams',
       body: 'El sensor de suspensión del coche es literalmente un <strong>potenciómetro OEM</strong> (GM 15098628/29), uno por rueda. Su señal pasa por un divisor de voltaje porque el sensor da 5V pero el ESP32 solo acepta 3.3V — exactamente el circuito que practicas hoy, a otra escala. Umbral real de alerta: ángulo de suspensión <span class="value-hl">&gt; 25°</span>.' },

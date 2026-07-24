@@ -191,6 +191,7 @@
         'shadow-intensity': '1'
       }, []);
       if (m.poster) mv.setAttribute('poster', m.poster);
+      if (m.orientation) mv.setAttribute('orientation', m.orientation); // "roll pitch yaw"
       slot = el('div', { class: 'model-slot' }, [mv]);
       setTimeout(function () {
         if (window.TelemetrySims && window.TelemetrySims._util) {
