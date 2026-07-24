@@ -2,6 +2,8 @@
 
 Sitio estático del curso introductorio de electrónica para telemetría de MadRams (Minibaja SAE). Portada + 6 páginas de sesión, sin build step.
 
+**Licencia:** MIT (ver [`LICENSE`](LICENSE)). Los modelos 3D (`assets/models/*.glb`, derivados de GrabCAD), el HDRI (CC0) y las librerías por CDN conservan su propia licencia — detalle en `LICENSE`.
+
 ## Ver en local
 
 Desde la raíz del proyecto:
