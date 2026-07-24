@@ -18,7 +18,7 @@ window.SESSION_DATA = {
       { k: 'Flash / SRAM', v: '32 KB / 2 KB' },
       { k: 'Reloj', v: '16 MHz' },
       { k: 'Bus I2C', v: 'A4 SDA · A5 SCL' },
-      { k: 'En el coche real', v: 'ESP32' }
+      { k: 'En el coche real', v: 'Heltec WiFi LoRa 32 V4 (ESP32-S3R2)' }
     ]
   },
   lesson: [
