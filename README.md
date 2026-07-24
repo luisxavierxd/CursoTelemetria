@@ -51,7 +51,7 @@ El slot 3D del hero muestra un placeholder punteado hasta que la sesión define
 `@google/model-viewer`, sin build) rotable con mouse/touch, con auto-rotación y giro
 ligado al scroll de la sección.
 
-**Estado:** ✅ Arduino Uno (S1) · ✅ Potenciómetro (S2) · ⬜ DS18B20 (S3) · ⬜ MPU6050 (S4) · ⬜ GPS (S5).
+**Estado:** ✅ Arduino Uno (S1) · ✅ Potenciómetro (S2) · ✅ DS18B20 (S3) · ✅ MPU6050 (S4) · ✅ GPS GY-NEO6MV2 (S5). Todos con iluminación de estudio (HDRI en `assets/models/env/`).
 
 ### Flujo de conversión CAD → `.glb` (probado con GrabCAD + SolidWorks)
 
@@ -79,5 +79,5 @@ ligado al scroll de la sección.
 
 ## Pendientes para el usuario
 
-- Añadir los modelos `.glb` que faltan (DS18B20, MPU6050, GPS) siguiendo el flujo de arriba.
+
 - Actualizar los links de Notion en `assets/js/data/sesion-*.js` (`cta.url`) si las páginas de Práctica cambian de ubicación.
