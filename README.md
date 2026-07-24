@@ -77,7 +77,17 @@ ligado al scroll de la sección.
 - **Orientación:** añade `orientation` al `model` en los datos — se pasa a
   `<model-viewer>` como `"roll pitch yaw"`. Ej. potenciómetro: `orientation: '90deg 0deg 180deg'`.
 
-## Pendientes para el usuario
+## Estado y pendientes
 
+Contenido, simuladores, diagramas, fondos, rieles, logo/favicon y los **5 modelos 3D**
+están listos. Pendiente:
 
-- Actualizar los links de Notion en `assets/js/data/sesion-*.js` (`cta.url`) si las páginas de Práctica cambian de ubicación.
+- **Publicar en GitHub Pages** (ver arriba): el sitio funciona en local pero aún no se ha
+  desplegado (no hay remoto configurado).
+- **Sesión 6** (proyecto abierto) no lleva simulador ni modelo 3D — es intencional; si se
+  quiere algo ahí, es trabajo aparte.
+- **Limpieza opcional:** carpetas fuente de CAD (`MPU_6050/`, `GY-NEO6MV2-withAnt_v7/`) y
+  archivos `.SLDPRT/.SLDASM` sueltos en el root — no afectan el sitio ni el repo (sin
+  trackear); se pueden borrar cuando SolidWorks los libere.
+- Actualizar los links de Notion en `assets/js/data/sesion-*.js` (`cta.url`) si las páginas
+  de Práctica cambian de ubicación.
