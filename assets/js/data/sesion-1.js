@@ -17,7 +17,8 @@ window.SESSION_DATA = {
       { k: 'Entradas analógicas', v: '6 (A0–A5)' },
       { k: 'Flash / SRAM', v: '32 KB / 2 KB' },
       { k: 'Reloj', v: '16 MHz' },
-      { k: 'Bus I2C', v: 'A4 SDA · A5 SCL' }
+      { k: 'Bus I2C', v: 'A4 SDA · A5 SCL' },
+      { k: 'En el coche real', v: 'ESP32' }
     ]
   },
   lesson: [
