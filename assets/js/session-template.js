@@ -188,7 +188,11 @@
       var mv = el('model-viewer', {
         src: m.src, alt: m.alt || m.label || 'Modelo 3D',
         'camera-controls': '', 'auto-rotate': '', 'interaction-prompt': 'none',
-        'shadow-intensity': '1'
+        // Iluminación de estudio (HDRI) para revelar relieve y materiales; el skybox
+        // no se muestra (fondo transparente), solo se usa para luz y reflejos.
+        'environment-image': '../assets/models/env/studio_1k.hdr',
+        'tone-mapping': 'neutral', 'exposure': '1.1',
+        'shadow-intensity': '1', 'shadow-softness': '0.6'
       }, []);
       if (m.poster) mv.setAttribute('poster', m.poster);
       if (m.orientation) mv.setAttribute('orientation', m.orientation); // "roll pitch yaw"
