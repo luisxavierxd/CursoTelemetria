@@ -27,6 +27,9 @@ Abre `http://localhost:8000/`.
 
 ## Publicar en GitHub Pages
 
+Ya está desplegado en <https://luisxavierxd.github.io/CursoTelemetria/>. Para reproducirlo
+desde cero:
+
 1. Crea un repositorio en GitHub (puede ser `usuario.github.io` o cualquier otro nombre — el sitio usa rutas relativas, funciona igual como user-page o project-page).
 2. Desde esta carpeta:
 
@@ -82,14 +85,11 @@ ligado al scroll de la sección.
 ## Estado y pendientes
 
 Contenido, simuladores, diagramas, fondos, rieles, logo/favicon y los **5 modelos 3D**
-están listos. Pendiente:
+están listos. El sitio está **publicado** en GitHub Pages:
+<https://luisxavierxd.github.io/CursoTelemetria/>. Cada Teoría del Notion enlaza a su
+sesión publicada. Pendiente:
 
-- **Publicar en GitHub Pages** (ver arriba): el sitio funciona en local pero aún no se ha
-  desplegado (no hay remoto configurado).
 - **Sesión 6** (proyecto abierto) no lleva simulador ni modelo 3D — es intencional; si se
   quiere algo ahí, es trabajo aparte.
-- **Limpieza opcional:** carpetas fuente de CAD (`MPU_6050/`, `GY-NEO6MV2-withAnt_v7/`) y
-  archivos `.SLDPRT/.SLDASM` sueltos en el root — no afectan el sitio ni el repo (sin
-  trackear); se pueden borrar cuando SolidWorks los libere.
 - Actualizar los links de Notion en `assets/js/data/sesion-*.js` (`cta.url`) si las páginas
   de Práctica cambian de ubicación.
