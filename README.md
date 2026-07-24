@@ -14,12 +14,14 @@ Abre `http://localhost:8000/`.
 
 - `index.html` — portada con el temario.
 - `sesiones/sesion-N.html` — shells que cargan `assets/js/data/sesion-N.js` (contenido) y `assets/js/session-template.js` (el que arma la página).
-- `assets/css/` — `tokens.css` (paleta/tipografía), `base.css` (componentes compartidos), `home.css`, `sesion.css`.
-- `assets/js/animations.js` — animaciones Anime.js (traza de circuito, circuito de Mónaco con punto de telemetría, revelado al hacer scroll, contadores).
-- `assets/js/sims/` — un módulo de simulador interactivo por sesión (`ohm-law`, `voltage-divider`, `onewire-temp`, `i2c-imu`, `gps-lora`) + `registry.js` (registro compartido y utilidades). `assets/css/sims.css` los estiliza.
+- `assets/js/data/sesion-N.js` — todo el contenido de la sesión: la **lección** explicativa (array `lesson` con bloques `concept` / `callout` / `diagram` / `lab`), la referencia rápida, errores, bibliografía, el `simulator` y el `model` 3D.
+- `assets/js/session-template.js` — arma cada página desde los datos: hero + modelo 3D, lección (con el laboratorio embebido donde toca), referencia, y los **rieles laterales** (índice/scrollspy a la izquierda y telemetría demo con gráficas a la derecha, solo en pantallas ≥1540px).
+- `assets/css/` — `tokens.css` (paleta/tipografía), `base.css` (componentes compartidos + fondos), `home.css`, `sesion.css` (lección, notas de profesor, rieles).
+- `assets/js/animations.js` — animaciones Anime.js: traza de circuito, **fondo de Mónaco** (circuito centrado con punto de telemetría que da vueltas, con continuidad entre páginas vía `sessionStorage`), revelado al hacer scroll, contadores.
+- `assets/js/sims/` — un módulo de simulador interactivo por sesión (`ohm-law`, `voltage-divider`, `onewire-temp`, `i2c-imu`, `gps-lora`) + `registry.js` (registro compartido y utilidades: reducedMotion, scrollRotate del modelo 3D, y `alarm` para las alertas catastróficas). `assets/css/sims.css` los estiliza.
+- `assets/models/` — modelos 3D (`.glb`) de los componentes. Cada sesión referencia el suyo en `model.src`.
 - `assets/img/LogoMadrams.png` — logo del equipo, usado en el header y como favicon del sitio.
-- `assets/img/placeholders/` — usado como referencia para dónde van fotos reales (los placeholders visibles se generan en el propio HTML/JS, no son archivos).
-- `assets/img/diagrams/` — diagramas esquemáticos genéricos (SVG), no fotos.
+- `assets/img/diagrams/` — diagramas esquemáticos (SVG) que se muestran inline en las lecciones (triángulo de Ohm, serie/paralelo, divisor, bus OneWire, bus I2C, ejes IMU, umbral de impacto, escalera ADC, SPI microSD, pipeline de telemetría). Algunos se marcan `wide: true` en los datos para renderizar más grandes.
 
 ## Publicar en GitHub Pages
 
@@ -33,26 +35,49 @@ Abre `http://localhost:8000/`.
 3. En GitHub: Settings → Pages → Source: rama `main`, carpeta `/ (root)`.
 4. Espera unos minutos; el sitio queda en `https://<usuario>.github.io/<repo>/` (o en la raíz si es un user-page).
 
-## Simuladores y modelos 3D
+## Simuladores
 
-Cada sesión (1–5) incluye un simulador interactivo (sección "Laboratorio interactivo",
-código en `assets/js/sims/<sesion>.js`) y un slot para modelo 3D del componente principal
-en el hero. Los slots muestran un placeholder con borde punteado hasta que se les asigna
-un archivo `.glb`/`.gltf`. La sesión 6 (proyecto abierto) no lleva simulador ni modelo.
+Cada sesión 1–5 incluye un simulador interactivo (sección "Laboratorio interactivo",
+embebido dentro de la lección donde ayuda a explicar el tema; código en
+`assets/js/sims/<sesion>.js`). Las alertas "catastróficas" (LED que explota en S1,
+temperatura crítica en S3, impacto en S4, ángulo >25° en S2) usan `_util.alarm` /
+efectos propios y respetan `prefers-reduced-motion`. La sesión 6 (proyecto abierto) no
+lleva simulador ni modelo.
 
-**Para añadir un modelo 3D real:**
+## Modelos 3D
 
-1. Coloca el archivo en `assets/models/<componente>.glb` (crea la carpeta `assets/models/` si no existe).
-2. En `assets/js/data/sesion-N.js`, pon la ruta en `model.src`, por ejemplo:
+El slot 3D del hero muestra un placeholder punteado hasta que la sesión define
+`model.src`. Con un `.glb` se convierte en un visor `<model-viewer>` (CDN
+`@google/model-viewer`, sin build) rotable con mouse/touch, con auto-rotación y giro
+ligado al scroll de la sección.
 
-       model: { label: 'Arduino Uno', alt: 'Modelo 3D de Arduino Uno', src: '../assets/models/arduino.glb' }
+**Estado:** ✅ Arduino Uno (S1) · ✅ Potenciómetro (S2) · ⬜ DS18B20 (S3) · ⬜ MPU6050 (S4) · ⬜ GPS (S5).
 
-3. Al recargar, el slot pasa de placeholder a un visor `<model-viewer>` rotable
-   (mouse/touch), con auto-rotación al entrar en viewport y rotación ligada al scroll de
-   la sección. `<model-viewer>` se carga por CDN (`@google/model-viewer`); no requiere build.
+### Flujo de conversión CAD → `.glb` (probado con GrabCAD + SolidWorks)
+
+1. En SolidWorks, **exporta como glTF (`.gltf`), NO como glTF Binary (`.glb`)**. El
+   export `.glb` de SolidWorks salió **truncado** (solo el JSON, sin los datos binarios).
+   El `.gltf` genera una carpeta con `.gltf` + un `.bin` (varios MB — la geometría) +
+   los `.png` de textura si los hay. Verifica que el `.bin` pese **varios MB**.
+2. Empaca y comprime a un `.glb` autónomo con Draco (resuelve el `.bin` y las texturas):
+
+       npx gltf-pipeline -i Componente/Componente.gltf -o assets/models/Componente.glb -d
+
+   Draco baja el tamaño ~95% (p. ej. Arduino: 9.8 MB → ~0.5 MB). `<model-viewer>` decodifica
+   Draco de fábrica.
+3. Cablea en `assets/js/data/sesion-N.js`:
+
+       model: { label: 'Arduino Uno', alt: 'Modelo 3D de Arduino Uno', src: '../assets/models/ArduinoUno.glb' }
+
+### Ajustes sin re-exportar (editando el `.glb` o atributos de model-viewer)
+
+- **Texturas espejeadas:** agrega `KHR_texture_transform` a los materiales con textura
+  (volteo en U → `offset [1,0] scale [-1,1]`; en V → `offset [0,1] scale [1,-1]`). Se edita
+  el chunk JSON del `.glb` sin tocar la geometría Draco (el Arduino usa volteo en V).
+- **Orientación:** añade `orientation` al `model` en los datos — se pasa a
+  `<model-viewer>` como `"roll pitch yaw"`. Ej. potenciómetro: `orientation: '90deg 0deg 180deg'`.
 
 ## Pendientes para el usuario
 
-- Añadir los modelos `.glb` de los componentes principales (Arduino, potenciómetro, DS18B20, MPU6050, GPS) — ver "Simuladores y modelos 3D" arriba.
-- Reemplazar los placeholders de foto (marcados en cada sesión) por fotos reales del hardware cuando estén disponibles.
+- Añadir los modelos `.glb` que faltan (DS18B20, MPU6050, GPS) siguiendo el flujo de arriba.
 - Actualizar los links de Notion en `assets/js/data/sesion-*.js` (`cta.url`) si las páginas de Práctica cambian de ubicación.
