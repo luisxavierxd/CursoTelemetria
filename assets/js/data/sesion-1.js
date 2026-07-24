@@ -7,7 +7,19 @@ window.SESSION_DATA = {
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'Sin subsistema específico — base de todo el sistema', 'LED, resistencias, multímetro'],
   photoPlaceholder: 'Foto: mesa de trabajo con Arduino, protoboard, LED y multímetro del kit',
   simulator: { type: 'ohm-law', title: 'Laboratorio: Ley de Ohm y el LED', caption: 'Ajusta resistencia y voltaje; mira cómo cambia la corriente y si el LED sobrevive.' },
-  model: { label: 'Arduino Uno', alt: 'Modelo 3D de Arduino Uno', src: '../assets/models/ArduinoUno.glb', orientation: '0deg 0deg 203deg' },
+  model: {
+    label: 'Arduino Uno', alt: 'Modelo 3D de Arduino Uno',
+    src: '../assets/models/ArduinoUno.glb', orientation: '0deg 0deg 203deg',
+    specs: [
+      { k: 'Microcontrolador', v: 'ATmega328P' },
+      { k: 'Voltaje lógico', v: '<span class="hl">5 V</span>' },
+      { k: 'E/S digitales', v: '14 (6 PWM ~)' },
+      { k: 'Entradas analógicas', v: '6 (A0–A5)' },
+      { k: 'Flash / SRAM', v: '32 KB / 2 KB' },
+      { k: 'Reloj', v: '16 MHz' },
+      { k: 'Bus I2C', v: 'A4 SDA · A5 SCL' }
+    ]
+  },
   lesson: [
     { type: 'callout', heading: 'Por qué importa para Baja',
       body: 'Todo sensor de telemetría se reduce, al final, a leer un <strong>voltaje</strong>. Esta sesión es la base de todas las demás: sin la Ley de Ohm y sin saber usar un multímetro, ningún sensor posterior va a tener sentido.' },

@@ -210,7 +210,24 @@
         ])
       ]);
     }
-    return el('div', { class: 'reveal', style: 'margin-top:1.5rem;' }, [slot]);
+    var kids = [slot];
+    if (m.specs && m.specs.length) kids.push(buildSpecCard(m));
+    return el('div', { class: 'hero-model reveal', style: 'margin-top:1.5rem;' }, kids);
+  }
+
+  // Ficha técnica del componente, al lado del modelo 3D.
+  function buildSpecCard(m) {
+    var rows = m.specs.map(function (s) {
+      return el('div', { class: 'spec-row' }, [
+        el('span', { class: 'spec-k' }, [s.k]),
+        el('span', { class: 'spec-v', html: s.v })
+      ]);
+    });
+    return el('div', { class: 'spec-card' }, [
+      el('div', { class: 'spec-card__eyebrow' }, ['Ficha técnica']),
+      el('div', { class: 'spec-card__title' }, [m.label || 'Componente']),
+      el('div', { class: 'spec-list' }, rows)
+    ]);
   }
 
   // Construye la sección del laboratorio a partir de la spec del simulador.

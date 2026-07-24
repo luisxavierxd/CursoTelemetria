@@ -31,6 +31,22 @@
 .diagram figcaption { margin-top: 6px; }
 .diagram--wide img { max-width: 640px; display: block; margin: 0 auto; }
 
+/* ---- Modelo 3D + ficha técnica (hero) ---- */
+.hero-model { display: flex; gap: var(--space-3); align-items: stretch; flex-wrap: wrap; }
+.hero-model .model-slot { flex: 1 1 340px; width: auto; max-width: 460px; align-self: flex-start; }
+.spec-card {
+  flex: 1 1 260px; min-width: 240px;
+  background: var(--bg-panel); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-3); display: flex; flex-direction: column;
+}
+.spec-card__eyebrow { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--signal-amber); margin-bottom: 4px; }
+.spec-card__title { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.spec-list { display: grid; gap: 10px; font-family: var(--font-mono); font-size: 0.84rem; align-content: start; }
+.spec-row { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
+.spec-k { color: var(--text-dim); white-space: nowrap; }
+.spec-v { color: var(--text); text-align: right; }
+.spec-v .hl { color: var(--blue-bright); }
+
 /* ---- Lección explicativa ---- */
 .concept { max-width: 760px; }
 .concept p { font-size: 1.02rem; }

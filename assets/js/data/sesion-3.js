@@ -6,7 +6,19 @@ window.SESSION_DATA = {
   quote: 'Bus OneWire + calibración segura de un sensor real, sin riesgos de quemadura.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'DS18B20 en motor/CVT · dos sensores, un bus', 'Bonus: MPR121 capacitivo'],
   simulator: { type: 'onewire-temp', title: 'Laboratorio: bus OneWire y umbrales', caption: 'Dos DS18B20 en un solo cable. Sube la temperatura y quita el pull-up para ver el error real.' },
-  model: { label: 'DS18B20', alt: 'Modelo 3D del sensor DS18B20', src: '../assets/models/DS18B20.glb', orientation: '0deg 0deg 180deg' },
+  model: {
+    label: 'DS18B20', alt: 'Modelo 3D del sensor DS18B20',
+    src: '../assets/models/DS18B20.glb', orientation: '0deg 0deg 180deg',
+    specs: [
+      { k: 'Interfaz', v: '1-Wire (1 cable de datos)' },
+      { k: 'Voltaje', v: '3.0–5.5 V' },
+      { k: 'Rango', v: '<span class="hl">−55 a +125 °C</span>' },
+      { k: 'Precisión', v: '±0.5 °C' },
+      { k: 'Resolución', v: '9–12 bits' },
+      { k: 'Identificador', v: 'ROM única 64-bit' },
+      { k: 'Pull-up', v: '4.7 kΩ (obligatoria)' }
+    ]
+  },
   lesson: [
     { type: 'callout', heading: 'Conexión con MadRams',
       body: 'El DS18B20 vigila el <strong>motor</strong> (alerta &gt;110°C) y la <strong>CVT</strong> (advertencia &gt;90°C, crítico &gt;105°C). Es una tarea real pendiente del equipo: montar físicamente el DS18B20 en motor/CVT — hoy practicamos exactamente eso, pero con agua tibia/fría para calibrar sin riesgo de quemadura.' },
