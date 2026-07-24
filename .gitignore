@@ -1,0 +1,13 @@
+# Claude Code / superpowers — artefactos de proceso, no subir al repo
+.claude/
+.superpowers/
+skills-lock.json
+CLAUDE.md
+
+# Specs y planes generados durante el desarrollo (sesiones)
+docs/superpowers/
+
+# Basura de sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
