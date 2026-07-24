@@ -6,7 +6,7 @@ window.SESSION_DATA = {
   quote: 'Introducción a I2C usando el sensor real de detección de impacto/rollover.',
   badges: ['1:30h (25 min teoría / 65 min práctica)', 'MPU6050 ×2 en el mismo bus I2C', 'Chasis 0x68 / volante 0x69'],
   simulator: { type: 'i2c-imu', title: 'Laboratorio: direcciones I2C y umbral de impacto', caption: 'Cambia AD0 para ver 0x68/0x69 (y el conflicto si chocan), e inclina el IMU para disparar el evento.' },
-  model: { label: 'MPU6050', alt: 'Modelo 3D del IMU MPU6050', src: '../assets/models/MPU6050.glb', orientation: '0deg 0deg 180deg' },
+  model: { label: 'MPU6050', alt: 'Modelo 3D del IMU MPU6050', src: '../assets/models/MPU6050.glb', orientation: '180deg 0deg 180deg' },
   lesson: [
     { type: 'callout', heading: 'Conexión con MadRams',
       body: 'MadRams usa <strong>dos MPU6050</strong> en el mismo bus I2C: uno en el chasis (<span class="value-hl">0x68</span>) y otro en el volante (<span class="value-hl">0x69</span>). Es el ejemplo perfecto de por qué existen las direcciones I2C — sin ellas el Arduino no sabría de cuál sensor viene cada dato. Uso real: detección de impacto / rollover (seguridad del piloto).' },
