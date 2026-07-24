@@ -17,7 +17,7 @@ Abre `http://localhost:8000/`.
 - `index.html` — portada con el temario.
 - `sesiones/sesion-N.html` — shells que cargan `assets/js/data/sesion-N.js` (contenido) y `assets/js/session-template.js` (el que arma la página).
 - `assets/js/data/sesion-N.js` — todo el contenido de la sesión: la **lección** explicativa (array `lesson` con bloques `concept` / `callout` / `diagram` / `lab`), la referencia rápida, errores, bibliografía, el `simulator` y el `model` 3D.
-- `assets/js/session-template.js` — arma cada página desde los datos: hero + modelo 3D, lección (con el laboratorio embebido donde toca), referencia, y los **rieles laterales** (índice/scrollspy a la izquierda y telemetría demo con gráficas a la derecha, solo en pantallas ≥1540px).
+- `assets/js/session-template.js` — arma cada página desde los datos: hero + modelo 3D, lección (con el laboratorio embebido donde toca), referencia, y los **rieles laterales** (índice/scrollspy a la izquierda y telemetría demo con gráficas a la derecha, solo en pantallas ≥1360px).
 - `assets/css/` — `tokens.css` (paleta/tipografía), `base.css` (componentes compartidos + fondos), `home.css`, `sesion.css` (lección, notas de profesor, rieles).
 - `assets/js/animations.js` — animaciones Anime.js: traza de circuito, **fondo de Mónaco** (circuito centrado con punto de telemetría que da vueltas, con continuidad entre páginas vía `sessionStorage`), revelado al hacer scroll, contadores.
 - `assets/js/sims/` — un módulo de simulador interactivo por sesión (`ohm-law`, `voltage-divider`, `onewire-temp`, `i2c-imu`, `gps-lora`) + `registry.js` (registro compartido y utilidades: reducedMotion, scrollRotate del modelo 3D, y `alarm` para las alertas catastróficas). `assets/css/sims.css` los estiliza.

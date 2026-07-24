@@ -170,11 +170,34 @@
     apply();
   }
 
+  // Si el sistema pide "reducir movimiento", todas las animaciones de arriba se
+  // saltan silenciosamente. Este aviso descartable explica por qué el sitio se ve
+  // estático, para que el usuario no lo confunda con un fallo de carga.
+  function showReducedMotionNotice() {
+    if (!reducedMotion()) return;
+    try { if (sessionStorage.getItem('rmNoticeDismissed') === '1') return; } catch (e) {}
+
+    var notice = document.createElement('div');
+    notice.className = 'reduced-motion-notice';
+    notice.setAttribute('role', 'status');
+    notice.innerHTML =
+      '<span>Tu sistema tiene activado <strong>“reducir movimiento”</strong>, por eso las animaciones están desactivadas.</span>' +
+      '<button type="button" aria-label="Cerrar aviso">&times;</button>';
+
+    notice.querySelector('button').addEventListener('click', function () {
+      notice.remove();
+      try { sessionStorage.setItem('rmNoticeDismissed', '1'); } catch (e) {}
+    });
+
+    document.body.appendChild(notice);
+  }
+
   function init() {
     drawCircuitTraces();
     animateMonaco();
     observeReveals(document);
     animateCounters();
+    showReducedMotionNotice();
   }
 
   window.TelemetryAnim = { init: init, revealNew: observeReveals };

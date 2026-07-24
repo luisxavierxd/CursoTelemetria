@@ -221,3 +221,35 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .bg-monaco svg { width: min(92vw, 900px); height: auto; max-height: 86vh; overflow: visible; }
 .bg-monaco .monaco-track { stroke-opacity: 0.32; stroke-dasharray: 1600; }
 .bg-monaco .monaco-dot { opacity: 0.9; filter: drop-shadow(0 0 7px rgba(255, 177, 61, 0.95)); }
+
+/* ===== Aviso "reducir movimiento" (animations.js lo inserta si aplica) ===== */
+.reduced-motion-notice {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-2);
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: min(92vw, 520px);
+  padding: 10px 12px 10px 16px;
+  background: var(--bg-panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--signal-amber);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.6);
+}
+.reduced-motion-notice strong { color: var(--signal-amber); font-weight: 600; }
+.reduced-motion-notice button {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: none; border: none; border-radius: 6px;
+  color: var(--text-dim); font-size: 1.3rem; line-height: 1; cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.reduced-motion-notice button:hover { background: var(--bg-panel-2); color: var(--text); }
