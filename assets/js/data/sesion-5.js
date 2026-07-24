@@ -6,7 +6,7 @@ window.SESSION_DATA = {
   quote: 'Cierre del curso introductorio: de sensores sueltos a construir la mitad de un sistema de adquisición real, y ver la otra mitad funcionando.',
   badges: ['1:30h (25-30 min teoría / 60-65 min práctica y demo)', 'GPS MAX-M10S + LoRa Heltec 915MHz + dashboard Grafana', 'Práctica hands-on: GPS + microSD'],
   simulator: { type: 'gps-lora', title: 'Laboratorio: NMEA y el paquete LoRa', caption: 'El coche recorre la pista: mira la sentencia NMEA y los bytes del paquete que viaja por radio.' },
-  model: { label: 'Módulo GPS NEO-6', alt: 'Modelo 3D del módulo GPS NEO-6', src: '../assets/models/GPS_NEO6.glb', orientation: '-90deg 0deg -90deg' },
+  model: { label: 'Módulo GPS NEO-6', alt: 'Modelo 3D del módulo GPS NEO-6', src: '../assets/models/GPS_NEO6.glb', orientation: '-90deg 0deg -45deg' },
   lesson: [
     { type: 'callout', heading: 'Conexión con MadRams',
       body: 'Ya construiste, sin saberlo, una versión mini de casi todas las piezas de sensado (potenciómetro, MPU6050, DS18B20, MPR121). Hoy armas la mitad de "abajo" del sistema real (GPS + respaldo SD) y ves en demo la mitad de "arriba" (dashboard + radio). El pipeline completo del coche: <code>ESP32 → LoRa 915MHz → receptor en pits → InfluxDB → Grafana</code>, con respaldo en SD por si se pierde la señal.' },
