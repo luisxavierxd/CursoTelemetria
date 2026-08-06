@@ -57,6 +57,16 @@ a:focus-visible, button:focus-visible, .btn:focus-visible {
 .site-header .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
 .site-header__brand { display: flex; align-items: center; gap: var(--space-1); font-family: var(--font-display); font-weight: 600; color: var(--text); text-decoration: none; }
 .site-header__brand img { height: 40px; width: auto; }
+/* Distintivo de nivel: este curso es el "Básico" del temario de Telemetría */
+.level-badge {
+  font-family: var(--font-mono); font-style: normal;
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; line-height: 1;
+  padding: 4px 8px; border-radius: 999px;
+  color: var(--signal-amber);
+  background: rgba(255, 177, 61, 0.1);
+  border: 1px solid rgba(255, 177, 61, 0.5);
+}
 
 .nav-dots { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
 .nav-dots a {
